@@ -1,0 +1,24 @@
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px; /* Slightly wider gap between logo and text */
+      font-size: 15px; /* Smaller, more premium font size */
+      font-weight: 700; /* Bolder text to compensate for the smaller size */
+      letter-spacing: 0.15em; /* Wide, architectural spacing */
+      color: #f8fafc;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .brand-logo {
+      height: 32px; /* Smaller logo to match the text size */
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55));
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.85));
+    }

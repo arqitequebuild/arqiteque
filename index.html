@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARQITEQUE | Level 1 Hub</title>
+  
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #060714;
+      --surface: #0b0e22;
+      --border: rgba(99, 102, 241, 0.18);
+      --text: #ffffff;
+      --muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* --- STICKY NAVBAR --- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 72px;
+      background: rgba(6, 7, 20, 0.75); 
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* UPDATED BRAND STYLING (SMALLER & WIDER) */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px; 
+      font-size: 15px; 
+      font-weight: 700; 
+      letter-spacing: 0.15em; 
+      color: #f8fafc;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .brand-logo {
+      height: 30px; /* Reduced from 40px */
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55));
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.85));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* --- HERO SCREEN --- */
+    .hero-section {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - 81px);
+      display: flex;
+      flex-direction: column;
+      background: 
+        radial-gradient(circle at 74% 52%, rgba(67, 56, 202, 0.30) 0%, rgba(49, 46, 129, 0.14) 42%, transparent 68%),
+        radial-gradient(circle at 38% 88%, rgba(88, 28, 135, 0.22) 0%, transparent 52%),
+        radial-gradient(circle at 15% 15%, rgba(15, 23, 42, 0.6) 0%, transparent 50%),
+        #060714;
+    }
+
+    #particle-wave {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 72px 60px 72px;
+      max-width: 760px;
+    }
+
+    .headline {
+      font-size: clamp(54px, 6.8vw, 92px);
+      font-weight: 700;
+      line-height: 1.03;
+      letter-spacing: -0.035em;
+      margin-bottom: 22px;
+    }
+
+    .headline span {
+      display: block;
+    }
+
+    .headline .accent-text {
+      background: linear-gradient(95deg, #5b6cf9 0%, #6d5dfc 45%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 30px rgba(91, 108, 249, 0.35));
+    }
+
+    .subhead {
+      font-size: 17px;
+      color: #9ca3af;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 38px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      text-decoration: none;
+      background: linear-gradient(135deg, #3b4cca 0%, #6d28d9 100%);
+      box-shadow: 
+        0 4px 24px rgba(79, 70, 229, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.22);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    .cta-btn svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.25s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.12);
+      box-shadow: 
+        0 6px 32px rgba(99, 102, 241, 0.72),
+        inset 0 1px 1px rgba(255, 255, 255, 0.32);
+    }
+
+    .cta-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* --- LEVEL 1 HUB SECTIONS (Below Fold) --- */
+    .hub-container {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(to bottom, #060714 0%, #04050d 100%);
+      padding: 120px 72px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #818cf8;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    /* 01. Manifesto Block */
+    .manifesto-section {
+      margin-bottom: 140px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .manifesto-text {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .manifesto-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .manifesto-quote {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid #6d28d9;
+      padding: 36px;
+      border-radius: 12px;
+      font-size: 20px;
+      line-height: 1.5;
+      font-weight: 500;
+      color: #f1f5f9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* 02. Artifacts / Proof Grid */
+    .artifacts-section {
+      margin-bottom: 140px;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 12px 40px rgba(79, 70, 229, 0.15);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #f8fafc;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* 03. Direct Comms / Footer Dock */
+    .connect-dock {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.4) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .connect-info h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .connect-info p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 500px;
+    }
+
+    .connect-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-btn {
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-btn:hover {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    /* --- STRIPPED DOWN FOOTER --- */
+    .site-footer {
+      width: 100%;
+      background-color: #000000;
+      padding: 60px 20px 40px 20px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .footer-copy {
+      color: #52525b;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .navbar { padding: 20px 24px; }
+      .manifesto-section { grid-template-columns: 1fr; gap: 40px; }
+      .grid-cards { grid-template-columns: 1fr; }
+      .hub-container { padding: 80px 24px; }
+      .hero-content { padding: 0 24px 40px 24px; }
+      .hero-section { height: calc(100vh - 81px); }
+      .connect-dock { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <img 
+        src="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png" 
+        alt="ARQITEQUE Logo" 
+        class="brand-logo"
+      >
+      <span>ARQITEQUE</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#artifacts">Artifacts</a>
+      <a href="#connect">Connect</a>
+    </div>
+  </nav>
+
+  <!-- HERO SCREEN -->
+  <div class="hero-section">
+    <canvas id="particle-wave"></canvas>
+
+    <main class="hero-content">
+      <h1 class="headline">
+        <span>Build the</span>
+        <span class="accent-text">Next.</span>
+      </h1>
+      <p class="subhead">Modern. Fast. Limitless.</p>
+
+      <a href="#manifesto" class="cta-btn">
+        Explore Hub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </a>
+    </main>
+  </div>
+
+  <!-- LEVEL 1 HUB CONTENT -->
+  <div class="hub-container">
+
+    <!-- 01. MANIFESTO -->
+    <section id="manifesto" class="manifesto-section">
+      <div>
+        <div class="section-tag">Core Philosophy</div>
+        <h2 class="section-title">Built for absolute execution.</h2>
+        <p class="manifesto-text">
+          Most modern web architecture is bloated with framework clutter and noise. <strong>ARQITEQUE</strong> rejects the conventional template loops in favor of monolithic geometry, pure contrast, and raw performance speed. 
+          <br><br>
+          We operate on uncompromised personal standards—building digital systems designed to cut through the noise and stand the test of time.
+        </p>
+      </div>
+      <div>
+        <div class="manifesto-quote">
+          "Speed is a discipline. Minimalism is the elimination of the non-essential to let the essential speak with absolute authority."
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. ARTIFACTS / CAPABILITIES -->
+    <section id="artifacts" class="artifacts-section">
+      <div class="section-tag">Capabilities & Proof</div>
+      <h2 class="section-title">Engineered for the Edge.</h2>
+      
+      <div class="grid-cards">
+        <div class="card">
+          <h3 class="card-title">Vibe Coding & Systems</h3>
+          <p class="card-desc">Rapid deployment of high-end frontend experiences using semantic vanilla code, custom HTML5 canvas shaders, and precise CSS mathematics.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Brutalist Identity</h3>
+          <p class="card-desc">Deep obsidian dark-mode frameworks paired with razor-sharp geometric branding assets and high-contrast atmospheric contrast.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Zero-Bloat Performance</h3>
+          <p class="card-desc">Lightweight single-file architecture built for instantaneous loading times and flawless cross-browser responsiveness.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. DIRECT COMMS DOCK -->
+    <section id="connect" class="connect-dock">
+      <div class="connect-info">
+        <div class="section-tag" style="margin-bottom: 8px;">Direct Access</div>
+        <h3>Initiate Contact.</h3>
+        <p>Available for high-impact vibe coding contracts, custom web architecture, and elite engineering roles. Direct line to the architect below.</p>
+      </div>
+      
+      <div class="connect-links">
+        <a href="mailto:arqiteque.build@gmail.com" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email Direct
+        </a>
+        <a href="https://www.facebook.com/arqiteque" target="_blank" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook Page
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- STRIPPED DOWN FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      
+      <!-- Legal Links Only -->
+      <div class="footer-links">
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/refund">Refund Policy</a>
+      </div>
+
+      <!-- Copyright Only -->
+      <p class="footer-copy">© 2026 ARQITEQUE</p>
+
+    </div>
+  </footer>
+
+  <!-- PARTICLE CANVAS ANIMATION SCRIPT -->
+  <script>
+    const canvas = document.getElementById('particle-wave');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let time = 0;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function smokeCurl(u, v, t) {
+      const n1 = Math.sin(u * 3.8 + t * 0.9 + v * 2.1);
+      const n2 = Math.cos(u * 6.4 - t * 0.6 + v * 3.7) * 0.5;
+      const n3 = Math.sin(u * 10.2 + v * 5.4 + t * 0.4) * 0.25;
+      return n1 + n2 + n3;
+    }
+
+    function drawSmokeHaze(t) {
+      const puffs = [
+        { x: 0.56, y: 0.68, r: 0.24, c: 'rgba(109, 40, 217, 0.13)', dx: 0.04, dy: -0.03 },
+        { x: 0.78, y: 0.44, r: 0.28, c: 'rgba(59, 130, 246, 0.11)', dx: -0.03, dy: 0.04 },
+        { x: 0.86, y: 0.76, r: 0.22, c: 'rgba(139, 92, 246, 0.10)', dx: -0.04, dy: -0.02 }
+      ];
+
+      puffs.forEach((p, i) => {
+        const cx = width * (p.x + Math.sin(t * 0.7 + i * 2) * p.dx);
+        const cy = height * (p.y + Math.cos(t * 0.6 + i * 1.5) * p.dy);
+        const radius = Math.max(width, height) * p.r;
+
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grad.addColorStop(0, p.c);
+        grad.addColorStop(1, 'rgba(6, 7, 20, 0)');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawSmokeVeil({ cols, rows, startX, startY, endX, endY, twistFreq, twistPhase, spreadScale, amp, opacityScale }) {
+      for (let r = 0; r < rows; r++) {
+        const vNorm = r / (rows - 1);
+        const v = vNorm - 0.5;
+
+        for (let c = 0; c < cols; c++) {
+          const u = c / (cols - 1);
+
+          const spineX = width * (startX + (endX - startX) * u);
+          const spineY = height * (startY + (endY - startY) * u) 
+                       + Math.sin(u * Math.PI * 1.5 - 0.5) * (height * amp);
+
+          const curlX = smokeCurl(u, v * 1.6, time) * 46;
+          const curlY = smokeCurl(u + 1.3, v * 1.8, time * 0.85) * 54;
+
+          const twistAngle = u * twistFreq + twistPhase + time * 0.55 + curlX * 0.008;
+          const dispersion = 1 + Math.abs(smokeCurl(u * 0.8, v, time * 0.5)) * 0.45;
+          const ribbonWidth = Math.cos(twistAngle) * spreadScale * dispersion;
+
+          const x = spineX - v * ribbonWidth * 0.52 + curlX;
+          const y = spineY + v * ribbonWidth + curlY;
+
+          const endFade = Math.pow(Math.sin(u * Math.PI), 1.35);
+          const edgeFade = Math.pow(Math.max(0, 1 - Math.abs(v * 2)), 1.85);
+
+          const pinchFactor = 1 - Math.min(1, Math.abs(Math.cos(twistAngle)));
+          const vaporShimmer = 0.85 + 0.15 * Math.sin(u * 12 + v * 9 + time * 1.5);
+          const alpha = Math.max(0, endFade * edgeFade * (0.28 + pinchFactor * 0.62) * vaporShimmer * opacityScale);
+
+          if (alpha <= 0.012) continue;
+
+          const violetMix = Math.max(0, Math.min(1, (1 - u) * 0.4 + pinchFactor * 0.5 + curlY * 0.004));
+          const coreGlow = pinchFactor * 48;
+
+          const red = Math.min(255, Math.round(42 * (1 - violetMix) + 150 * violetMix + coreGlow));
+          const green = Math.min(255, Math.round(104 * (1 - violetMix) + 58 * violetMix + coreGlow * 0.65));
+          const blue = Math.min(255, Math.round(238 * (1 - violetMix) + 248 * violetMix + coreGlow * 0.4));
+
+          const radius = Math.max(0.45, (0.65 + edgeFade * 0.65 + pinchFactor * 0.35));
+
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'lighter';
+
+      drawSmokeHaze(time);
+
+      drawSmokeVeil({
+        cols: 190,
+        rows: 46,
+        startX: 0.20,
+        startY: 1.06,
+        endX: 1.08,
+        endY: 0.12,
+        twistFreq: 4.1,
+        twistPhase: 0.4,
+        spreadScale: Math.min(width, height) * 0.44,
+        amp: 0.15,
+        opacityScale: 0.78
+      });
+
+      drawSmokeVeil({
+        cols: 135,
+        rows: 28,
+        startX: 0.34,
+        startY: 1.14,
+        endX: 1.12,
+        endY: 0.50,
+        twistFreq: 3.3,
+        twistPhase: 2.0,
+        spreadScale: Math.min(width, height) * 0.38,
+        amp: -0.12,
+        opacityScale: 0.42
+      });
+
+      ctx.globalCompositeOperation = 'source-over';
+      time += 0.0025;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
