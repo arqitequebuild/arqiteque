@@ -4,19 +4,24 @@
   },
   "max_steps": 12,
   "front_man": "necessity_auditor",
+  "llm_config": {
+    "model_name": "alibaba/qwen-3.5-35b-a3b"
+  },
   "agents": [
     {
       "name": "necessity_auditor",
-      "description": "Deterministic HTML transformer. Strips inline styles, unwraps redundant divs, removes deprecated tags, and reports exact byte/node reduction.",
+      "function": {
+        "description": "Deterministic HTML transformer. Strips inline styles, unwraps redundant divs, removes deprecated tags, and reports exact byte/node reduction.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "html": { "type": "string", "description": "Raw HTML payload to audit and purge." }
+          },
+          "required": ["html"]
+        }
+      },
       "instructions": "Call this agent with an HTML string. It returns the purged HTML and telemetry. No API key required; runs entirely client-side.",
-      "tools": ["purge_html"],
-      "input_schema": {
-        "type": "object",
-        "properties": {
-          "html": { "type": "string", "description": "Raw HTML payload to audit and purge." }
-        },
-        "required": ["html"]
-      }
+      "tools": ["purge_html"]
     }
   ],
   "tools": [
