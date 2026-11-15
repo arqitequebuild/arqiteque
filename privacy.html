@@ -3,48 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy | ARQITEQUE</title>
+  <title>ARQITEQUE | Privacy Policy</title>
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #060714; color: #d1d5db; font-family: 'Inter', sans-serif; line-height: 1.7; padding: 80px 24px; max-width: 800px; margin: 0 auto; }
-    h1 { color: #ffffff; font-size: 32px; margin-bottom: 10px; letter-spacing: -0.02em; }
-    h2 { color: #818cf8; font-size: 18px; margin-top: 40px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.1em; }
-    p, ul { margin-bottom: 15px; font-size: 15px; }
-    li { margin-bottom: 8px; margin-left: 20px; }
-    strong { color: #ffffff; font-weight: 600; }
-    .back-btn { display: inline-block; margin-top: 50px; padding: 12px 24px; background: linear-gradient(135deg, #3b4cca 0%, #6d28d9 100%); color: white; text-decoration: none; border-radius: 999px; font-weight: 500; transition: opacity 0.3s ease; }
-    .back-btn:hover { opacity: 0.8; }
+    :root {
+      --bg: #060714;
+      --surface: #0b0e22;
+      --border: rgba(99, 102, 241, 0.18);
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --accent: #6d28d9;
+      --cyan: #38bdf8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; padding: 40px 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .back-link { display: inline-flex; color: var(--cyan); text-decoration: none; font-size: 14px; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px; }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .update-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 40px; }
+    h2 { font-size: 18px; font-weight: 600; color: #f8fafc; margin-top: 32px; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+    p, li { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    strong { color: var(--text); font-weight: 500; }
+    @media (max-width: 768px) { .container { padding: 30px 20px; } }
   </style>
 </head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p style="color: #94a3b8; font-size: 13px;">Last Updated: November 2026</p>
+  <div class="container">
+    <a href="/" class="back-link">← Return to ARQITEQUE Engine</a>
+    <h1>Privacy Policy</h1>
+    <div class="update-date">Last Updated: November 2026</div>
 
-  <p>At Arqiteque, we respect your privacy and are committed to protecting your personal data. This policy outlines how we handle the information you provide to us.</p>
+    <p>At ARQITEQUE, privacy is engineered into our architecture. Because our compiler executes client-side, your data footprint remains minimal.</p>
 
-  <h2>1. Information We Collect</h2>
-  <p>We only collect information necessary to build and deliver your project. This includes:</p>
-  <ul>
-    <li><strong>Contact Information:</strong> Your name, email address, and phone number when you initiate contact via our website or Facebook page.</li>
-    <li><strong>Project Data:</strong> Any text, images, or business details you provide for the website build.</li>
-    <li><strong>Payment Data:</strong> We do not store your credit card or payment details on our servers. All payments are processed securely via third-party gateways (such as GCash, Maya, or bank transfers).</li>
-  </ul>
+    <h2>1. INFORMATION WE PROCESS</h2>
+    <p>We adhere to strict zero-bloat data principles:</p>
+    <ul>
+      <li><strong>Direct Communications:</strong> If you contact us via email or direct message, we retain your contact handle solely to respond to your inquiry.</li>
+      <li><strong>Local Compilation Payload:</strong> Code tested within our live compiler sandbox runs locally in your browser and is not retained on our servers.</li>
+      <li><strong>Infrastructure Telemetry:</strong> Standard hosting metrics (such as anonymous page views and performance analytics via Vercel) are collected to ensure platform stability.</li>
+    </ul>
 
-  <h2>2. How We Use Your Data</h2>
-  <p>We do not sell, rent, or trade your personal information to third parties. Your data is used strictly for:</p>
-  <ul>
-    <li>Communicating with you about your project.</li>
-    <li>Building and deploying your website.</li>
-    <li>Sending invoices and processing payments.</li>
-  </ul>
+    <h2>2. HOW DATA IS UTILIZED</h2>
+    <p>Any collected information is used strictly for maintaining platform performance, responding to developer inquiries, and optimizing our WebXR spatial interfaces.</p>
 
-  <h2>3. Third-Party Services</h2>
-  <p>We may use third-party tools (like Vercel for hosting, GitHub for code management, and external payment gateways). These services have their own privacy policies, and we encourage you to review them.</p>
+    <h2>3. THIRD-PARTY INFRASTRUCTURE</h2>
+    <p>ARQITEQUE is hosted via secure cloud infrastructure (Vercel and GitHub). These providers operate under their own independent privacy and security standards.</p>
 
-  <h2>4. Data Retention</h2>
-  <p>We retain your contact information for as long as necessary to maintain your website or for future maintenance requests. If you wish to have your data deleted from our records, please contact us.</p>
-
-  <a href="/" class="back-btn">← Back to Hub</a>
+    <h2>4. CONTACT</h2>
+    <p>For privacy-related inquiries or data removal requests, reach out directly to <strong>arqiteque.build@gmail.com</strong>.</p>
+  </div>
 </body>
 </html>
