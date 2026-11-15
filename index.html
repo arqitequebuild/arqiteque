@@ -54,17 +54,17 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px; 
-      font-size: 15px; 
-      font-weight: 700; 
-      letter-spacing: 0.15em; 
+      gap: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
       color: #f8fafc;
       text-decoration: none;
       text-transform: uppercase;
     }
 
     .brand-logo {
-      height: 30px;
+      height: 32px;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55));
@@ -374,6 +374,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 1024px) {
@@ -387,6 +389,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      position: relative;
+      isolation: isolate;
     }
 
     .pane-toolbar {
@@ -437,6 +441,8 @@
       background: #060714;
       border: none;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
     /* 03. Direct Comms Dock */
@@ -868,7 +874,13 @@
       const startTime = performance.now();
       const rawHtml = document.getElementById('source-code').value;
 
-      const compiled = `<!DOCTYPE html>
+      let compiled = '';
+      
+      // Smart detection: if full HTML document, render as-is; otherwise wrap in brutalist sandbox
+      if (rawHtml.toLowerCase().includes('<html') || rawHtml.toLowerCase().includes('<!doctype')) {
+        compiled = rawHtml;
+      } else {
+        compiled = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -896,6 +908,7 @@
   ${rawHtml}
 </body>
 </html>`;
+      }
 
       const iframe = document.getElementById('live-preview');
       const doc = iframe.contentDocument || iframe.contentWindow.document;
