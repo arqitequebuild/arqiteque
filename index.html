@@ -22,12 +22,7 @@
       --cyan: #38bdf8;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
@@ -47,509 +42,202 @@
       padding: 20px 72px;
       background: rgba(6, 7, 20, 0.75); 
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: #f8fafc;
-      text-decoration: none;
-      text-transform: uppercase;
+      display: flex; align-items: center; gap: 16px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.15em;
+      color: #f8fafc; text-decoration: none; text-transform: uppercase;
     }
 
     .brand-logo {
-      height: 32px;
-      width: auto;
-      object-fit: contain;
+      height: 32px; width: auto; object-fit: contain;
       filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55));
       transition: transform 0.25s ease, filter 0.25s ease;
     }
 
-    .brand:hover .brand-logo {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.85));
-    }
+    .brand:hover .brand-logo { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.85)); }
 
-    .nav-links {
-      display: flex;
-      gap: 36px;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 400;
-      transition: color 0.25s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 400; transition: color 0.25s ease; }
+    .nav-links a:hover { color: var(--text); }
 
     /* --- HERO SCREEN --- */
     .hero-section {
-      position: relative;
-      width: 100vw;
-      height: calc(100vh - 81px);
-      display: flex;
-      flex-direction: column;
-      background: 
-        radial-gradient(circle at 74% 52%, rgba(67, 56, 202, 0.30) 0%, rgba(49, 46, 129, 0.14) 42%, transparent 68%),
-        radial-gradient(circle at 38% 88%, rgba(88, 28, 135, 0.22) 0%, transparent 52%),
-        radial-gradient(circle at 15% 15%, rgba(15, 23, 42, 0.6) 0%, transparent 50%),
-        #060714;
+      position: relative; width: 100vw; height: calc(100vh - 81px); display: flex; flex-direction: column;
+      background: radial-gradient(circle at 74% 52%, rgba(67, 56, 202, 0.30) 0%, rgba(49, 46, 129, 0.14) 42%, transparent 68%),
+                  radial-gradient(circle at 38% 88%, rgba(88, 28, 135, 0.22) 0%, transparent 52%),
+                  radial-gradient(circle at 15% 15%, rgba(15, 23, 42, 0.6) 0%, transparent 50%), #060714;
     }
 
-    #particle-wave {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
+    #particle-wave { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
     .hero-content {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 72px 60px 72px;
-      max-width: 850px;
+      position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; justify-content: center;
+      padding: 0 72px 60px 72px; max-width: 850px;
     }
 
-    /* --- GLOWING GLASS PILL BADGE --- */
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 6px 14px;
-      margin-bottom: 24px;
-      border-radius: 9999px;
-      background: rgba(99, 102, 241, 0.08);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #a5b4fc;
-      backdrop-filter: blur(8px);
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+      padding: 6px 14px; margin-bottom: 24px; border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase; color: #a5b4fc; backdrop-filter: blur(8px);
     }
 
     .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
     }
 
     .headline {
-      font-size: clamp(54px, 6.8vw, 92px);
-      font-weight: 700;
-      line-height: 1.03;
-      letter-spacing: -0.035em;
-      margin-bottom: 22px;
+      font-size: clamp(54px, 6.8vw, 92px); font-weight: 700; line-height: 1.03;
+      letter-spacing: -0.035em; margin-bottom: 22px;
     }
-
-    .headline span {
-      display: block;
-    }
-
+    .headline span { display: block; }
     .headline .accent-text {
       background: linear-gradient(95deg, #5b6cf9 0%, #6d5dfc 45%, #8b5cf6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 30px rgba(91, 108, 249, 0.35));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(91, 108, 249, 0.35));
     }
 
-    .subhead {
-      font-size: 17px;
-      color: #9ca3af;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 38px;
-    }
+    .subhead { font-size: 17px; color: #9ca3af; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 38px; }
 
-    .cta-group {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .cta-group { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 
     .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
-      padding: 13px 28px;
-      border-radius: 9999px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #ffffff;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px; width: fit-content;
+      padding: 13px 28px; border-radius: 9999px; font-size: 14px; font-weight: 500;
+      color: #ffffff; text-decoration: none;
       background: linear-gradient(135deg, #3b4cca 0%, #6d28d9 100%);
-      box-shadow: 
-        0 4px 24px rgba(79, 70, 229, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 24px rgba(79, 70, 229, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.22);
       transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
     }
 
-    .cta-btn.secondary {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-    }
-
-    .cta-btn svg {
-      width: 15px;
-      height: 15px;
-      transition: transform 0.25s ease;
-    }
+    .cta-btn.secondary { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: none; }
+    .cta-btn svg { width: 15px; height: 15px; transition: transform 0.25s ease; }
 
     .cta-btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.12);
-      box-shadow: 
-        0 6px 32px rgba(99, 102, 241, 0.72),
-        inset 0 1px 1px rgba(255, 255, 255, 0.32);
+      transform: translateY(-1px); filter: brightness(1.12);
+      box-shadow: 0 6px 32px rgba(99, 102, 241, 0.72), inset 0 1px 1px rgba(255, 255, 255, 0.32);
     }
-
-    .cta-btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(139, 92, 246, 0.4);
-    }
-
-    .cta-btn:hover svg {
-      transform: translateX(4px);
-    }
+    .cta-btn.secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(139, 92, 246, 0.4); }
+    .cta-btn:hover svg { transform: translateX(4px); }
 
     /* --- LEVEL 1 HUB SECTIONS --- */
     .hub-container {
-      position: relative;
-      z-index: 10;
-      background: linear-gradient(to bottom, #060714 0%, #04050d 100%);
-      padding: 120px 72px;
-      max-width: 1300px;
-      margin: 0 auto;
+      position: relative; z-index: 10; background: linear-gradient(to bottom, #060714 0%, #04050d 100%);
+      padding: 120px 72px; max-width: 1300px; margin: 0 auto;
     }
 
-    .section-tag {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #818cf8;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 4vw, 48px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-    }
+    .section-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: #818cf8; margin-bottom: 16px; font-weight: 600; }
+    .section-title { font-size: clamp(32px, 4vw, 48px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 24px; }
 
     /* 01. Manifesto Block */
-    .manifesto-section {
-      margin-bottom: 140px;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 64px;
-      align-items: start;
-    }
-
-    .manifesto-text {
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-
-    .manifesto-text strong {
-      color: var(--text);
-      font-weight: 500;
-    }
+    .manifesto-section { margin-bottom: 140px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+    .manifesto-text { font-size: 18px; line-height: 1.7; color: var(--muted); }
+    .manifesto-text strong { color: var(--text); font-weight: 500; }
 
     .manifesto-quote {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid #6d28d9;
-      padding: 36px;
-      border-radius: 12px;
-      font-size: 20px;
-      line-height: 1.5;
-      font-weight: 500;
-      color: #f1f5f9;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: var(--surface); border: 1px solid var(--border); border-left: 3px solid #6d28d9;
+      padding: 36px; border-radius: 12px; font-size: 20px; line-height: 1.5; font-weight: 500;
+      color: #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     /* 02. Artifacts / Capabilities */
-    .artifacts-section {
-      margin-bottom: 140px;
-    }
-
-    .grid-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      margin-top: 40px;
-    }
+    .artifacts-section { margin-bottom: 140px; }
+    .grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
 
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 36px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px;
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(139, 92, 246, 0.4);
-      box-shadow: 0 12px 40px rgba(79, 70, 229, 0.15);
-    }
-
-    .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: #f8fafc;
-    }
-
-    .card-desc {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--muted);
-    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 12px 40px rgba(79, 70, 229, 0.15); }
+    .card-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: #f8fafc; }
+    .card-desc { font-size: 14px; line-height: 1.6; color: var(--muted); }
 
     /* --- LIVE HACKATHON ENGINE SANDBOX --- */
     .sandbox-section {
-      margin-bottom: 140px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 48px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      margin-bottom: 140px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 48px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
 
-    .sandbox-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
+    .sandbox-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
 
     .telemetry-hud {
-      display: flex;
-      gap: 20px;
-      background: rgba(6, 7, 20, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
+      display: flex; gap: 20px; background: rgba(6, 7, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 24px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
     }
 
-    .hud-metric span {
-      color: var(--cyan);
-      font-weight: 600;
-    }
+    .hud-metric span { color: var(--cyan); font-weight: 600; }
 
-    .sandbox-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      position: relative;
-      z-index: 2;
-    }
-
-    @media (max-width: 1024px) {
-      .sandbox-grid { grid-template-columns: 1fr; }
-    }
+    .sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; position: relative; z-index: 2; }
+    @media (max-width: 1024px) { .sandbox-grid { grid-template-columns: 1fr; } }
 
     .editor-pane, .preview-pane {
-      background: #04050d;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      isolation: isolate;
+      background: #04050d; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;
+      overflow: hidden; display: flex; flex-direction: column; position: relative; isolation: isolate;
     }
 
     .pane-toolbar {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 12px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03); padding: 12px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+      font-family: 'JetBrains Mono', monospace; color: var(--muted);
     }
 
     .pane-toolbar button {
-      background: #4f46e5;
-      color: white;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
+      background: #4f46e5; color: white; border: none; padding: 6px 14px;
+      border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.2s;
     }
 
-    .pane-toolbar button:hover {
-      background: #6366f1;
-    }
+    .pane-toolbar button:hover { background: #6366f1; }
 
     textarea.code-input {
-      width: 100%;
-      height: 320px;
-      background: transparent;
-      color: #e2e8f0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      padding: 20px;
-      border: none;
-      resize: vertical;
-      outline: none;
-      line-height: 1.5;
+      width: 100%; height: 320px; background: transparent; color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 20px;
+      border: none; resize: vertical; outline: none; line-height: 1.5;
     }
 
     .preview-container {
-      width: 100%;
-      height: 320px;
-      background: #060714;
-      border: none;
-      display: block;
-      position: relative;
-      z-index: 1;
+      width: 100%; height: 320px; background: #060714; border: none; display: block; position: relative; z-index: 1;
     }
 
     /* 03. Direct Comms Dock */
     .connect-dock {
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.4) 100%);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 30px;
+      border: 1px solid var(--border); border-radius: 20px; padding: 60px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;
     }
 
-    .connect-info h3 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .connect-info p {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 500px;
-      margin-bottom: 18px;
-    }
+    .connect-info h3 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+    .connect-info p { color: var(--muted); font-size: 15px; max-width: 500px; margin-bottom: 18px; }
 
     .raw-email {
-      display: block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 16px;
-      color: #f8fafc;
-      letter-spacing: 0.04em;
-      user-select: all;
+      display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 16px; color: #f8fafc; letter-spacing: 0.04em; user-select: all;
     }
 
-    .connect-links {
-      display: flex;
-      gap: 16px;
-    }
+    .connect-links { display: flex; gap: 16px; }
 
     .social-btn {
-      padding: 12px 24px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 9999px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      padding: 12px 24px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px; color: var(--text); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: all 0.25s ease; display: flex; align-items: center; gap: 8px;
     }
 
-    .social-btn:hover {
-      background: #4f46e5;
-      border-color: #4f46e5;
-    }
+    .social-btn:hover { background: #4f46e5; border-color: #4f46e5; }
 
     /* --- FOOTER --- */
     .site-footer {
-      width: 100%;
-      background-color: #000000;
-      padding: 60px 20px 40px 20px;
-      display: flex;
-      justify-content: center;
-      position: relative;
-      z-index: 10;
+      width: 100%; background-color: #000000; padding: 60px 20px 40px 20px;
+      display: flex; justify-content: center; position: relative; z-index: 10;
     }
 
-    .footer-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      text-align: center;
-      max-width: 800px;
-      width: 100%;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .footer-links a {
-      color: #a1a1aa;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 400;
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: #ffffff;
-    }
-
-    .footer-copy {
-      color: #52525b;
-      font-size: 13px;
-      margin-top: 10px;
-    }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; max-width: 800px; width: 100%; }
+    .footer-links { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { color: #a1a1aa; text-decoration: none; font-size: 14px; font-weight: 400; transition: color 0.3s ease; }
+    .footer-links a:hover { color: #ffffff; }
+    .footer-copy { color: #52525b; font-size: 13px; margin-top: 10px; }
 
     /* Responsive */
     @media (max-width: 1024px) {
@@ -569,14 +257,9 @@
   <!-- STICKY NAVBAR -->
   <nav class="navbar">
     <a href="#" class="brand">
-      <img 
-        src="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png" 
-        alt="ARQITEQUE Logo" 
-        class="brand-logo"
-      >
+      <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png" alt="ARQITEQUE Logo" class="brand-logo">
       <span>ARQITEQUE</span>
     </a>
-
     <div class="nav-links">
       <a href="#manifesto">Manifesto</a>
       <a href="#artifacts">Artifacts</a>
@@ -596,7 +279,7 @@
         <span>Build the</span>
         <span class="accent-text">Next.</span>
       </h1>
-      <p class="subhead">Modern. Fast. Limitless.</p>
+      <p class="subhead">Deterministic. Browser-Native. Agent-Callable.</p>
 
       <div class="cta-group">
         <a href="#engine" class="cta-btn">
@@ -606,13 +289,13 @@
             <polyline points="19 12 12 19 5 12"></polyline>
           </svg>
         </a>
-        <a href="#" onclick="toggleImmersiveXR()" class="cta-btn secondary" id="xr-btn" style="border-color: var(--cyan); color: var(--cyan);">
+        <a href="/agent-manifest.json" target="_blank" class="cta-btn secondary" style="border-color: var(--cyan); color: var(--cyan);">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
             <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
             <line x1="12" y1="22.08" x2="12" y2="12"></line>
           </svg>
-          Enter Immersive XR
+          View Agent Manifest
         </a>
         <a href="#manifesto" class="cta-btn secondary">Explore Manifesto</a>
       </div>
@@ -651,8 +334,8 @@
           <p class="card-desc">Rapid deployment of high-end frontend experiences using semantic vanilla code, custom HTML5 canvas shaders, and precise CSS mathematics.</p>
         </div>
         <div class="card">
-          <h3 class="card-title">Brutalist Identity</h3>
-          <p class="card-desc">Deep obsidian dark-mode frameworks paired with razor-sharp geometric branding assets and high-contrast atmospheric contrast.</p>
+          <h3 class="card-title">Agentic Integration</h3>
+          <p class="card-desc">Fully conforming to the Open Agentic Web MVP Profile 0.2. The Necessity Engine is discoverable and callable by external AI agents.</p>
         </div>
         <div class="card">
           <h3 class="card-title">Zero-Bloat Performance</h3>
@@ -670,8 +353,8 @@
           <p style="color: var(--muted); font-size: 15px;">Test the client-side tree-shaker that strips framework bloat into pure brutalist HTML.</p>
         </div>
         <div class="telemetry-hud">
-          <div class="hud-metric">Bloat Removed: <span id="metric-reduction">96.4%</span></div>
-          <div class="hud-metric">Compile Latency: <span id="metric-latency">2ms</span></div>
+          <div class="hud-metric">Bloat Removed: <span id="metric-reduction">0%</span></div>
+          <div class="hud-metric">Compile Latency: <span id="metric-latency">0ms</span></div>
         </div>
       </div>
 
@@ -850,7 +533,7 @@
     animate();
   </script>
 
-  <!-- AUTONOMOUS COMPILER ENGINE SCRIPT -->
+  <!-- REAL NECESSITY ENGINE SCRIPT -->
   <script>
     function loadSampleBloat() {
       const sample = `<div class="w-full bg-slate-950 flex items-center justify-center p-4">
@@ -873,55 +556,58 @@
     function runEngine() {
       const startTime = performance.now();
       const rawHtml = document.getElementById('source-code').value;
-
-      let compiled = '';
       
-      // Smart detection: if full HTML document, render as-is; otherwise wrap in brutalist sandbox
-      if (rawHtml.toLowerCase().includes('<html') || rawHtml.toLowerCase().includes('<!doctype')) {
-        compiled = rawHtml;
-      } else {
-        compiled = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body { 
-      background: #060714; 
-      color: #ffffff; 
-      font-family: 'Inter', sans-serif; 
-      margin: 0; 
-      padding: 24px;
-      box-sizing: border-box;
-      width: 100%;
-      min-height: 100%;
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      overflow-y: auto;
-    }
-    * { box-sizing: border-box; }
-    button { cursor: pointer; }
-  </style>
-  <script src="https://cdn.tailwindcss.com"><\/script>
-</head>
-<body>
-  ${rawHtml}
-</body>
-</html>`;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(rawHtml, 'text/html');
+      
+      // 1. Strip inline styles, classes, legacy attributes
+      doc.body.querySelectorAll('*').forEach(el => {
+        if (el.hasAttribute('style')) el.removeAttribute('style');
+        if (el.hasAttribute('class')) el.removeAttribute('class');
+        ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'width'].forEach(attr => {
+          if (el.hasAttribute(attr)) el.removeAttribute(attr);
+        });
+      });
+
+      // 2. Collapse single-child divs with no attributes
+      let collapsed = true;
+      while (collapsed) {
+        collapsed = false;
+        doc.body.querySelectorAll('div').forEach(div => {
+          if (div.attributes.length === 0 && div.children.length === 1 && div.textContent.trim() === div.children[0].textContent.trim()) {
+            div.replaceWith(div.children[0]);
+            collapsed = true;
+          }
+        });
       }
 
-      const iframe = document.getElementById('live-preview');
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(compiled);
-      doc.close();
+      // 3. Remove stray br and serialize
+      doc.body.querySelectorAll('br').forEach(br => br.remove());
+      const purgedHtml = doc.body.innerHTML.replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();
 
+      // 4. REAL Math
       const originalBytes = new Blob([rawHtml]).size;
-      const optimizedBytes = Math.round(originalBytes * 0.08);
-      const latency = Math.round(performance.now() - startTime);
+      const purgedBytes = new Blob([purgedHtml]).size;
+      const reductionPct = originalBytes > 0 ? Math.max(0, Math.round(((originalBytes - purgedBytes) / originalBytes) * 100)) : 0;
+      const latency = Math.max(0.1, performance.now() - startTime).toFixed(1);
 
-      document.getElementById('metric-reduction').innerText = `${Math.max(85, Math.min(98, 99 - Math.round(optimizedBytes/originalBytes * 10)))}%`;
-      document.getElementById('metric-latency').innerText = `${Math.max(1, latency)}ms`;
+      // 5. Update UI
+      const iframe = document.getElementById('live-preview');
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      iframeDoc.open();
+      iframeDoc.write(`<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #ffffff; color: #000000; font-family: sans-serif; padding: 24px; }
+  </style>
+</head>
+<body>${purgedHtml}</body>
+</html>`);
+      iframeDoc.close();
+
+      document.getElementById('metric-reduction').innerText = `${reductionPct}%`;
+      document.getElementById('metric-latency').innerText = `${latency}ms`;
     }
 
     function exportCode() {
@@ -936,41 +622,6 @@
     }
 
     window.onload = runEngine;
-  </script>
-
-  <!-- METAVERSE / WEBXR SPATIAL ENGINE HANDLER -->
-  <script>
-    async function toggleImmersiveXR() {
-      if (navigator.xr) {
-        try {
-          const session = await navigator.xr.requestSession('immersive-vr', {
-            requiredFeatures: [],
-            optionalFeatures: ['hand-tracking', 'dom-overlay', 'local-floor'],
-            domOverlay: { root: document.body }
-          });
-          console.log("ARQITEQUE Spatial Engine Active in Meta Quest Immersive Mode.");
-          session.addEventListener('end', () => {
-            console.log("Immersive session ended.");
-          });
-        } catch (err) {
-          console.warn("WebXR request failed or requires Meta Quest Browser / Immersive Web Emulator:", err);
-          alert("Immersive XR mode initialized. (Note: Full spatial rendering requires Meta Quest Browser or the Meta Immersive Web Emulator extension).");
-        }
-      } else {
-        alert("WebXR API is not detected. Please open this URL in the Meta Quest Browser or use Chrome with the Immersive Web Emulator extension.");
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (navigator.xr) {
-        navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
-          const btn = document.getElementById('xr-btn');
-          if (supported && btn) {
-            btn.style.boxShadow = '0 0 15px rgba(56, 189, 248, 0.4)';
-          }
-        });
-      }
-    });
   </script>
 
   <!-- VERCEL ANALYTICS SCRIPT -->
