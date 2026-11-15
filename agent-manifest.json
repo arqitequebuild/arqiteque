@@ -2,7 +2,7 @@
   "networks": [
     {
       "name": "arqiteque-necessity-auditor",
-      "front_man": "necessity_auditor",
+      "front_man": "purge_html",
       "hocon": "/network.json"
     }
   ],
