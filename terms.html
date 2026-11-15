@@ -3,40 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms of Service | ARQITEQUE</title>
+  <title>ARQITEQUE | Terms of Service</title>
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #060714; color: #d1d5db; font-family: 'Inter', sans-serif; line-height: 1.7; padding: 80px 24px; max-width: 800px; margin: 0 auto; }
-    h1 { color: #ffffff; font-size: 32px; margin-bottom: 10px; letter-spacing: -0.02em; }
-    h2 { color: #818cf8; font-size: 18px; margin-top: 40px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.1em; }
-    p { margin-bottom: 15px; font-size: 15px; }
-    strong { color: #ffffff; font-weight: 600; }
-    .back-btn { display: inline-block; margin-top: 50px; padding: 12px 24px; background: linear-gradient(135deg, #3b4cca 0%, #6d28d9 100%); color: white; text-decoration: none; border-radius: 999px; font-weight: 500; transition: opacity 0.3s ease; }
-    .back-btn:hover { opacity: 0.8; }
+    :root {
+      --bg: #060714;
+      --surface: #0b0e22;
+      --border: rgba(99, 102, 241, 0.18);
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --accent: #6d28d9;
+      --cyan: #38bdf8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; padding: 40px 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .back-link { display: inline-flex; color: var(--cyan); text-decoration: none; font-size: 14px; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px; }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .update-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 40px; }
+    h2 { font-size: 18px; font-weight: 600; color: #f8fafc; margin-top: 32px; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+    p, li { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    strong { color: var(--text); font-weight: 500; }
+    @media (max-width: 768px) { .container { padding: 30px 20px; } }
   </style>
 </head>
 <body>
-  <h1>Terms of Service</h1>
-  <p style="color: #94a3b8; font-size: 13px;">Last Updated: November 2026</p>
-  
-  <p>Welcome to Arqiteque. By engaging our services, you agree to the following terms. These terms exist to ensure a clear, professional, and uncompromised engineering process.</p>
-  
-  <h2>1. Project Scope & Revisions</h2>
-  <p>All projects are scoped and agreed upon in writing prior to commencement. The client is entitled to two (2) rounds of major revisions during the staging phase. Any additional features, pages, or structural changes requested after the scope is locked will be billed at a separate, agreed-upon rate.</p>
-  
-  <h2>2. Payment Structure</h2>
-  <p>Arqiteque operates on a strict milestone basis. A <strong>50% non-refundable downpayment</strong> is required to secure the project slot, begin the architecture phase, and remove other potential clients from the queue. The remaining 50% must be settled prior to the final deployment, domain connection, and handover of source code. We reserve the right to halt development if payments are delayed.</p>
-  
-  <h2>3. Code & Asset Ownership</h2>
-  <p>Upon full and final payment, the client is granted full ownership of the custom source code and design assets created for their specific project. However, Arqiteque retains the right to display the completed website in its public portfolio (unless a Non-Disclosure Agreement is signed). Third-party services (hosting, domain registrars, payment gateways, external APIs) are subject to their own respective licenses and terms.</p>
-  
-  <h2>4. Client Responsibilities</h2>
-  <p>The client agrees to provide all necessary content (text, images, logos) in a timely manner. Delays in providing content will result in a delay in the project timeline.</p>
-  
-  <h2>5. Limitation of Liability</h2>
-  <p>Arqiteque is not liable for any downtime, data loss, or revenue loss caused by third-party hosting providers, domain registrars, or external API changes after the final handover.</p>
+  <div class="container">
+    <a href="/" class="back-link">← Return to ARQITEQUE Engine</a>
+    <h1>Terms of Service</h1>
+    <div class="update-date">Last Updated: November 2026</div>
 
-  <a href="/" class="back-btn">← Back to Hub</a>
+    <p>Welcome to ARQITEQUE. By accessing our web platform, compiling code through our client-side engine, or utilizing our WebXR spatial interfaces, you agree to the following terms.</p>
+
+    <h2>1. PLATFORM SCOPE & SOFTWARE USE</h2>
+    <p>ARQITEQUE operates as a zero-bloat, client-side autonomous web compilation engine and WebXR developer toolkit. The software and platform utilities are provided to demonstrate high-performance web architecture and spatial execution standards.</p>
+
+    <h2>2. CLIENT-SIDE EXECUTION & DATA PROCESSING</h2>
+    <p>Our code compiler and tree-shaker execute locally within your browser environment. ARQITEQUE does not permanently store source code payloads inputted into the live compilation sandbox unless explicitly exported or saved by the user.</p>
+
+    <h2>3. INTELLECTUAL PROPERTY & CODE OWNERSHIP</h2>
+    <p>All core interface designs, proprietary compilation shaders, branding assets, and system architecture remain the exclusive intellectual property of ARQITEQUE. You retain full ownership and rights over any custom code payloads you process, compile, or export via our platform.</p>
+
+    <h2>4. DISCLAIMER OF WARRANTIES</h2>
+    <p>ARQITEQUE is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We do not guarantee uninterrupted availability of experimental WebXR hardware integrations across all third-party devices or spatial browsers.</p>
+
+    <h2>5. LIMITATION OF LIABILITY</h2>
+    <p>ARQITEQUE and its maintainers shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use, compilation latency, or deployment of code generated through our system.</p>
+  </div>
 </body>
 </html>
