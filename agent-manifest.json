@@ -32,11 +32,13 @@
         "instructions": "Call this agent with an HTML string. It returns the purged HTML and telemetry. No API key required; runs entirely client-side."
       }
     ],
-    "site_actions": [
+        "site_actions": [
       {
         "name": "purge_html",
         "agent": "necessity_auditor",
         "description": "Exposed endpoint the runtime invokes to run the Necessity Engine transform.",
+        "file": "necessity-agent.js",
+        "method": "NecessityAuditor.invoke",
         "input_schema_ref": "#/agent_network/agents/0/input_schema",
         "output_schema_ref": "#/agent_network/agents/0/output_schema"
       }
