@@ -1,0 +1,33 @@
+{
+  "agents": {
+    "necessity_auditor": {
+      "description": "Deterministic HTML transformer. Strips inline styles, unwraps redundant divs, removes deprecated tags, and reports exact byte/node reduction.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "html": { "type": "string", "description": "Raw HTML payload to audit and purge." }
+        },
+        "required": ["html"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "purged_html": { "type": "string" },
+          "raw_bytes": { "type": "integer" },
+          "purged_bytes": { "type": "integer" },
+          "reduction_percent": { "type": "number" },
+          "raw_nodes": { "type": "integer" },
+          "purged_nodes": { "type": "integer" }
+        }
+      },
+      "site_actions": [
+        {
+          "name": "purge_html",
+          "description": "Exposed endpoint the runtime invokes to run the Necessity Engine transform.",
+          "file": "necessity-agent.js",
+          "method": "NecessityAuditor.invoke"
+        }
+      ]
+    }
+  }
+}
