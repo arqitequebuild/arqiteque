@@ -28,6 +28,17 @@
     {
       "name": "purge_html",
       "description": "Exposed endpoint the runtime invokes to run the Necessity Engine transform.",
+      "instructions": "Call this tool with an HTML string to get purged HTML and telemetry.",
+      "function": {
+        "description": "Deterministic HTML transformer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "html": { "type": "string" }
+          },
+          "required": ["html"]
+        }
+      },
       "file": "necessity-agent.js",
       "method": "NecessityAuditor.invoke"
     }
