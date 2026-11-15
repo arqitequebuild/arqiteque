@@ -1,33 +1,30 @@
 {
-  "agents": {
-    "necessity_auditor": {
+  "metadata": {
+    "description": "A browser-native DOM audit and purge agent. Accepts raw HTML, returns purged HTML with byte and node telemetry."
+  },
+  "max_steps": 12,
+  "front_man": "necessity_auditor",
+  "agents": [
+    {
+      "name": "necessity_auditor",
       "description": "Deterministic HTML transformer. Strips inline styles, unwraps redundant divs, removes deprecated tags, and reports exact byte/node reduction.",
+      "instructions": "Call this agent with an HTML string. It returns the purged HTML and telemetry. No API key required; runs entirely client-side.",
+      "tools": ["purge_html"],
       "input_schema": {
         "type": "object",
         "properties": {
           "html": { "type": "string", "description": "Raw HTML payload to audit and purge." }
         },
         "required": ["html"]
-      },
-      "output_schema": {
-        "type": "object",
-        "properties": {
-          "purged_html": { "type": "string" },
-          "raw_bytes": { "type": "integer" },
-          "purged_bytes": { "type": "integer" },
-          "reduction_percent": { "type": "number" },
-          "raw_nodes": { "type": "integer" },
-          "purged_nodes": { "type": "integer" }
-        }
-      },
-      "site_actions": [
-        {
-          "name": "purge_html",
-          "description": "Exposed endpoint the runtime invokes to run the Necessity Engine transform.",
-          "file": "necessity-agent.js",
-          "method": "NecessityAuditor.invoke"
-        }
-      ]
+      }
     }
-  }
+  ],
+  "tools": [
+    {
+      "name": "purge_html",
+      "description": "Exposed endpoint the runtime invokes to run the Necessity Engine transform.",
+      "file": "necessity-agent.js",
+      "method": "NecessityAuditor.invoke"
+    }
+  ]
 }
