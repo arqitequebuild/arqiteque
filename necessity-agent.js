@@ -1,106 +1,76 @@
-/**
- * Necessity Auditor — site action wrapper.
- * Exposes the ARQITEQUE Necessity Engine as a callable agent action.
- * Runs entirely in the browser. No API key. Deterministic output.
- */
-const NecessityAuditor = (function () {
-  'use strict';
 
-  function purgeHtml(rawHtml) {
-    const startTime = performance.now();
-    const rawBytes = new Blob([rawHtml]).size;
+function runEngine() {
+  const rawHtml = document.getElementById('source-code').value;
+  const iframe = document.getElementById('live-preview');
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(rawHtml, 'text/html');
-    const rawNodes = doc.body.querySelectorAll('*').length;
+  try {
+    const result = NecessityAuditor.invoke({ html: rawHtml });
 
-    let strippedStyles = 0;
-    let strippedClasses = 0;
-    let unwrappedDivs = 0;
-    let deprecatedTags = 0;
+    document.getElementById('metric-reduction').innerText =
+      `${result.reduction_percent}%`;
 
-    // 1. Deprecated <font> → <span>
-    doc.body.querySelectorAll('font').forEach(function (fontEl) {
-      const span = doc.createElement('span');
-      span.innerHTML = fontEl.innerHTML;
-      fontEl.replaceWith(span);
-      deprecatedTags++;
-    });
+    document.getElementById('metric-latency').innerText =
+      `${result.latency_ms}ms`;
 
-    // 2. Strip inline styles, classes, legacy attributes
-    doc.body.querySelectorAll('*').forEach(function (el) {
-      if (el.hasAttribute('style')) { el.removeAttribute('style'); strippedStyles++; }
-      if (el.hasAttribute('class')) { el.removeAttribute('class'); strippedClasses++; }
-      ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'width'].forEach(function (attr) {
-        if (el.hasAttribute(attr)) el.removeAttribute(attr);
-      });
-    });
-
-    // 3. Collapse single-child divs with no attributes
-    let collapsed = true;
-    while (collapsed) {
-      collapsed = false;
-      doc.body.querySelectorAll('div').forEach(function (div) {
-        if (div.attributes.length === 0 &&
-            div.children.length === 1 &&
-            div.textContent.trim() === div.children[0].textContent.trim()) {
-          div.replaceWith(div.children[0]);
-          unwrappedDivs++;
-          collapsed = true;
-        }
-      });
+    const previewDocument = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'none'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:;"
+  >
+  <style>
+    body {
+      background: #ffffff;
+      color: #000000;
+      font-family: sans-serif;
+      padding: 24px;
     }
+  </style>
+</head>
+<body>${result.purged_html}</body>
+</html>`;
 
-    // 4. Remove stray <br>
-    doc.body.querySelectorAll('br').forEach(function (br) { br.remove(); });
+    iframe.srcdoc = previewDocument;
 
-    // 5. Serialize
-    const purgedHtml = doc.body.innerHTML
-      .replace(/>\s+</g, '><')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
+  } catch (error) {
+    console.error('ARQITEQUE engine error:', error);
 
-    const purgedDoc = parser.parseFromString(purgedHtml, 'text/html');
-    const purgedNodes = purgedDoc.body.querySelectorAll('*').length;
-    const purgedBytes = new Blob([purgedHtml]).size;
-    const reductionPercent = rawBytes > 0
-      ? Math.max(0, Math.round(((rawBytes - purgedBytes) / rawBytes) * 100))
-      : 0;
+    iframe.srcdoc = '<!DOCTYPE html><html><body><p>Preview unavailable. Check your HTML input.</p></body></html>';
 
-    const latencyMs = Math.max(0.1, performance.now() - startTime);
-
-    return {
-      purged_html: purgedHtml,
-      raw_bytes: rawBytes,
-      purged_bytes: purgedBytes,
-      reduction_percent: reductionPercent,
-      raw_nodes: rawNodes,
-      purged_nodes: purgedNodes,
-      latency_ms: Number(latencyMs.toFixed(2)),
-      audit: {
-        stripped_styles: strippedStyles,
-        stripped_classes: strippedClasses,
-        unwrapped_divs: unwrappedDivs,
-        deprecated_tags: deprecatedTags
-      }
-    };
+    document.getElementById('metric-reduction').innerText = '—';
+    document.getElementById('metric-latency').innerText = '—';
   }
+}
 
-  /**
-   * Public callable interface. The runtime will invoke this.
-   */
-  function invoke(input) {
-    if (!input || typeof input.html !== 'string') {
-      throw new Error('NecessityAuditor: input must be an object with a string property "html".');
-    }
-    return purgeHtml(input.html);
+function exportCode() {
+  const rawHtml = document.getElementById('source-code').value;
+
+  try {
+    const result = NecessityAuditor.invoke({ html: rawHtml });
+
+    const blob = new Blob(
+      [result.purged_html],
+      { type: 'text/html;charset=utf-8' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'arqiteque-purged.html';
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  } catch (error) {
+    console.error('ARQITEQUE export error:', error);
+    alert(error.message || 'Export failed. Check your HTML input.');
   }
+}
 
-  return {
-    invoke: invoke,
-    purgeHtml: purgeHtml
-  };
-})();
-
-// CRITICAL: Expose the module to the global window object so the agent runtime can find it.
-window.NecessityAuditor = NecessityAuditor;
+window.addEventListener('DOMContentLoaded', runEngine);
