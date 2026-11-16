@@ -3,56 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARQITEQUE | Terms of Service</title>
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png">
+  <title>Terms of Service | ARQITEQUE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #060714;
-      --surface: #0b0e22;
-      --border: rgba(99, 102, 241, 0.18);
-      --text: #ffffff;
-      --muted: #94a3b8;
-      --accent: #6d28d9;
-      --cyan: #38bdf8;
+    body {
+      background-color: #060714;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 60px 24px;
+      display: flex;
+      justify-content: center;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; padding: 40px 20px; }
-    .container { max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-    .back-link { display: inline-flex; color: var(--cyan); text-decoration: none; font-size: 14px; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px; }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    .back-link {
+      display: inline-block;
+      color: #38bdf8;
+      text-decoration: none;
+      font-family: monospace;
+      margin-bottom: 40px;
+      font-size: 14px;
+    }
     .back-link:hover { text-decoration: underline; }
-    h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
-    .update-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 40px; }
-    h2 { font-size: 18px; font-weight: 600; color: #f8fafc; margin-top: 32px; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
-    p, li { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
-    ul { padding-left: 20px; margin-bottom: 16px; }
-    strong { color: var(--text); font-weight: 500; }
-    @media (max-width: 768px) { .container { padding: 30px 20px; } }
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .last-updated {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    p, ul {
+      margin-bottom: 20px;
+      color: #94a3b8;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="/" class="back-link">← Return to ARQITEQUE Engine</a>
+    <a href="/" class="back-link">← Return to ARQITEQUE</a>
+    
     <h1>Terms of Service</h1>
-    <div class="update-date">Last Updated: November 2026</div>
+    <div class="last-updated">Last Updated: November 2026</div>
 
-    <p>Welcome to ARQITEQUE. By accessing our web platform, compiling code through our client-side engine, or utilizing our WebXR spatial interfaces, you agree to the following terms.</p>
+    <p>Welcome to ARQITEQUE. By accessing our web platform, compiling code through our client-side engine, or interacting with our Open Agentic Web nodes, you agree to the following terms.</p>
 
-    <h2>1. PLATFORM SCOPE & SOFTWARE USE</h2>
-    <p>ARQITEQUE operates as a zero-bloat, client-side autonomous web compilation engine and WebXR developer toolkit. The software and platform utilities are provided to demonstrate high-performance web architecture and spatial execution standards.</p>
+    <h2>1. Platform Scope & Software Use</h2>
+    <p>ARQITEQUE operates as a zero-bloat, client-side autonomous web compilation engine and <strong>Open Agentic Web node</strong>. The software, platform utilities, and API endpoints are provided to demonstrate high-performance web architecture, deterministic DOM processing, and <strong>autonomous agentic execution standards</strong>.</p>
 
-    <h2>2. CLIENT-SIDE EXECUTION & DATA PROCESSING</h2>
-    <p>Our code compiler and tree-shaker execute locally within your browser environment. ARQITEQUE does not permanently store source code payloads inputted into the live compilation sandbox unless explicitly exported or saved by the user.</p>
+    <h2>2. Client-Side Execution & Data Processing</h2>
+    <p>Our code compiler and tree-shaker execute locally within your browser environment. ARQITEQUE does not permanently store source code payloads inputted into the live compilation sandbox unless explicitly exported or saved by the user. When external AI agents invoke our network, the payload is processed in-memory and discarded immediately after the response is generated.</p>
 
-    <h2>3. INTELLECTUAL PROPERTY & CODE OWNERSHIP</h2>
-    <p>All core interface designs, proprietary compilation shaders, branding assets, and system architecture remain the exclusive intellectual property of ARQITEQUE. You retain full ownership and rights over any custom code payloads you process, compile, or export via our platform.</p>
+    <h2>3. Intellectual Property & Code Ownership</h2>
+    <p>All core interface designs, proprietary compilation shaders, agent-manifest structures, branding assets, and system architecture remain the exclusive intellectual property of ARQITEQUE. You retain full ownership and rights over any custom code payloads you process, compile, or export via our platform.</p>
 
-    <h2>4. DISCLAIMER OF WARRANTIES</h2>
-    <p>ARQITEQUE is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We do not guarantee uninterrupted availability of experimental WebXR hardware integrations across all third-party devices or spatial browsers.</p>
+    <h2>4. Disclaimer of Warranties</h2>
+    <p>ARQITEQUE is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We do not guarantee uninterrupted availability of experimental <strong>agentic network integrations</strong> across all third-party AI assistants, environments, or browsers.</p>
 
-    <h2>5. LIMITATION OF LIABILITY</h2>
+    <h2>5. Limitation of Liability</h2>
     <p>ARQITEQUE and its maintainers shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use, compilation latency, or deployment of code generated through our system.</p>
   </div>
 </body>
