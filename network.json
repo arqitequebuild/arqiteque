@@ -9,11 +9,6 @@
   "llm_config": {
     "model_name": "alibaba/qwen-3.5-35b-a3b"
   },
-  "commondefs": {
-    "replacement_strings": {
-      "peer_rules": "When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes."
-    }
-  },
   "peer_policy": {
     "mode": "open"
   },
