@@ -1,0 +1,1 @@
+[![AgentCheck](https://agentcheck.netlify.app/badge?url=https%3A%2F%2Farqiteque.vercel.app%2Farqiteque-necessity-engine)](https://agentcheck.netlify.app/?url=https%3A%2F%2Farqiteque.vercel.app%2Farqiteque-necessity-engine)
