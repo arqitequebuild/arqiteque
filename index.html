@@ -1,114 +1,431 @@
-{
-  "metadata": {
-    "name": "arqiteque-necessity-engine",
-    "description": "Browser-native HTML Necessity Engine. Deterministic purge, security hardening, and measurable reduction of bloated HTML. Callable by any compatible agent on the open agentic web. Runs entirely client-side.",
-    "version": "0.2.0",
-    "publisher": "ARQITEQUE"
-  },
-  "max_steps": 16,
-  "front_man": "necessity_coordinator",
-  "llm_config": {
-    "model_name": "alibaba/qwen-3.5-35b-a3b"
-  },
-  "agents": [
-    {
-      "name": "necessity_coordinator",
-      "function": {
-        "description": "Entry-point coordinator for the ARQITEQUE Necessity Engine. Receives HTML cleaning requests, selects the appropriate mode, delegates to specialists, and returns clean results with full telemetry.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": {
-              "type": "string",
-              "description": "Raw HTML to process."
-            },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
-              "description": "Cleaning intensity. Defaults to 'safe' if omitted."
-            },
-            "goal": {
-              "type": "string",
-              "description": "Optional short statement of what the caller wants (e.g. 'remove bloat for email', 'security sanitize')."
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\nYour job:\n1. Understand the request and the desired mode (aggressive | safe | preserve-classes | security-first). Default to 'safe' if the caller does not specify.\n2. Call the purge_specialist tool with the html and chosen mode.\n3. Optionally call the telemetry_reporter if the caller asks for analysis or a summary.\n4. Return the purged HTML together with the full telemetry object. Never invent results — always use the tool output.\n\nPeer rule: When you have no website_* tools available, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations.\n\nStay precise, minimal, and deterministic. Prefer short, structured answers over long explanations unless the caller explicitly asks for commentary.",
-      "tools": ["purge_specialist", "telemetry_reporter"]
-    },
-    {
-      "name": "purge_specialist",
-      "function": {
-        "description": "Deterministic HTML transformer. Strips unnecessary markup, inline styles, deprecated tags, and dangerous attributes according to the selected mode. Returns purged HTML plus exact byte/node reduction metrics.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": {
-              "type": "string",
-              "description": "Raw HTML payload."
-            },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
-              "description": "Cleaning mode."
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "instructions": "You are the deterministic core of the Necessity Engine. Always call the purge_html tool with the provided html and mode. Return the exact tool result without modification or invention. Do not add commentary unless the coordinator asked for it.",
-      "tools": ["purge_html"]
-    },
-    {
-      "name": "telemetry_reporter",
-      "function": {
-        "description": "Turns raw purge telemetry into a short, useful summary of what was removed and the measured impact.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "telemetry": {
-              "type": "object",
-              "description": "The telemetry object returned by the purge tool."
-            },
-            "mode": {
-              "type": "string",
-              "description": "The mode that was used."
-            }
-          },
-          "required": ["telemetry"]
-        }
-      },
-      "instructions": "You receive the telemetry object from a successful purge. Produce a concise, factual summary (2–5 sentences max) covering: reduction percentage, bytes saved, nodes removed, and the most important categories of cleanup performed. Do not invent numbers. Stay technical and brief.",
-      "tools": []
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#060714">
+  <title>ARQITEQUE | Necessity Engine — Open Agentic Web</title>
+  <meta name="description" content="Browser-native HTML Necessity Engine. Deterministic purge, security hardening, and measurable reduction. Callable by any agent on the open agentic web.">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #060714;
+      --surface: #0b0e22;
+      --border: rgba(99, 102, 241, 0.18);
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --cyan: #38bdf8;
+      --indigo: #6366f1;
     }
-  ],
-  "tools": [
-    {
-      "name": "purge_html",
-      "description": "Core coded tool that runs the deterministic Necessity Engine transform in the browser.",
-      "instructions": "Call this tool with an HTML string and optional mode. It returns purged HTML and full telemetry. Runs entirely client-side.",
-      "function": {
-        "description": "Deterministic HTML transformer with mode support.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": {
-              "type": "string",
-              "description": "Raw HTML to process."
-            },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
-              "description": "Cleaning intensity. Defaults to safe."
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "file": "necessity-agent.js",
-      "method": "NecessityAuditor.invoke"
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .navbar { position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 20px 72px; background: rgba(6, 7, 20, 0.75); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .brand { display: flex; align-items: center; gap: 16px; font-size: 15px; font-weight: 700; letter-spacing: 0.15em; color: #f8fafc; text-decoration: none; text-transform: uppercase; }
+    .brand-logo { height: 32px; width: auto; object-fit: contain; filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55)); transition: transform 0.25s ease, filter 0.25s ease; }
+    .brand:hover .brand-logo { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.85)); }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 400; transition: color 0.25s ease; }
+    .nav-links a:hover { color: var(--text); }
+    .hero-section { position: relative; width: 100%; height: calc(100vh - 81px); min-height: 600px; display: flex; flex-direction: column; background: radial-gradient(circle at 74% 52%, rgba(67, 56, 202, 0.30) 0%, rgba(49, 46, 129, 0.14) 42%, transparent 68%), radial-gradient(circle at 38% 88%, rgba(88, 28, 135, 0.22) 0%, transparent 52%), radial-gradient(circle at 15% 15%, rgba(15, 23, 42, 0.6) 0%, transparent 50%), #060714; }
+    #particle-wave { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .hero-content { position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 72px 60px 72px; max-width: 900px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; width: fit-content; padding: 6px 14px; margin-bottom: 24px; border-radius: 9999px; background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #a5b4fc; backdrop-filter: blur(8px); }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    .headline { font-size: clamp(48px, 6.2vw, 84px); font-weight: 700; line-height: 1.05; letter-spacing: -0.035em; margin-bottom: 22px; }
+    .headline span { display: block; }
+    .headline .accent-text { background: linear-gradient(95deg, #5b6cf9 0%, #6d5dfc 45%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(91, 108, 249, 0.35)); }
+    .subhead { font-size: 17px; color: #9ca3af; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 38px; max-width: 540px; line-height: 1.5; }
+    .cta-group { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 10px; width: fit-content; padding: 13px 28px; border-radius: 9999px; font-size: 14px; font-weight: 500; color: #ffffff; text-decoration: none; background: linear-gradient(135deg, #3b4cca 0%, #6d28d9 100%); box-shadow: 0 4px 24px rgba(79, 70, 229, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.22); transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; }
+    .cta-btn.secondary { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: none; }
+    .cta-btn svg { width: 15px; height: 15px; transition: transform 0.25s ease; }
+    .cta-btn:hover { transform: translateY(-1px); filter: brightness(1.12); box-shadow: 0 6px 32px rgba(99, 102, 241, 0.72), inset 0 1px 1px rgba(255, 255, 255, 0.32); }
+    .cta-btn.secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(139, 92, 246, 0.4); }
+    .cta-btn:hover svg { transform: translateX(4px); }
+    .hub-container { position: relative; z-index: 10; background: linear-gradient(to bottom, #060714 0%, #04050d 100%); padding: 120px 72px; max-width: 1300px; margin: 0 auto; }
+    .section-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: #818cf8; margin-bottom: 16px; font-weight: 600; }
+    .section-title { font-size: clamp(32px, 4vw, 48px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 24px; }
+    .manifesto-section { margin-bottom: 120px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+    .manifesto-text { font-size: 18px; line-height: 1.7; color: var(--muted); }
+    .manifesto-text strong { color: var(--text); font-weight: 500; }
+    .manifesto-quote { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid #6d28d9; padding: 36px; border-radius: 12px; font-size: 20px; line-height: 1.5; font-weight: 500; color: #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .network-section { margin-bottom: 120px; }
+    .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .agent-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+    .agent-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #f8fafc; }
+    .agent-role { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); margin-bottom: 14px; }
+    .agent-card p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+    .sandbox-section { margin-bottom: 120px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .sandbox-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+    .mode-selector { display: flex; gap: 10px; flex-wrap: wrap; }
+    .mode-btn { padding: 8px 16px; border-radius: 9999px; font-size: 13px; font-weight: 500; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); cursor: pointer; transition: all 0.2s; }
+    .mode-btn.active { background: rgba(99, 102, 241, 0.2); border-color: var(--indigo); color: #c7d2fe; }
+    .mode-btn:hover { border-color: rgba(139, 92, 246, 0.5); color: #e0e7ff; }
+    .telemetry-hud { display: flex; gap: 20px; background: rgba(6, 7, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px 24px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; flex-wrap: wrap; }
+    .hud-metric span { color: var(--cyan); font-weight: 600; }
+    .sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .editor-pane, .preview-pane { background: #04050d; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .pane-toolbar { background: rgba(255, 255, 255, 0.03); padding: 12px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-family: 'JetBrains Mono', monospace; color: var(--muted); gap: 12px; }
+    .pane-toolbar button { background: #4f46e5; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    .pane-toolbar button:hover { background: #6366f1; }
+    textarea.code-input { width: 100%; height: 340px; background: transparent; color: #e2e8f0; font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 20px; border: none; resize: vertical; outline: none; line-height: 1.5; }
+    .preview-container { width: 100%; height: 340px; background: #ffffff; border: none; display: block; }
+    .peer-section { margin-bottom: 120px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; }
+    .peer-code { background: #04050d; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #a5b4fc; overflow-x: auto; margin-top: 20px; line-height: 1.6; }
+    .peer-code span { color: #94a3b8; }
+    .connect-dock { background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.4) 100%); border: 1px solid var(--border); border-radius: 20px; padding: 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; }
+    .connect-info h3 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+    .connect-info p { color: var(--muted); font-size: 15px; max-width: 500px; margin-bottom: 18px; }
+    .raw-email { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 16px; color: #f8fafc; letter-spacing: 0.04em; user-select: all; }
+    .site-footer { width: 100%; background-color: #000000; padding: 60px 20px 40px 20px; display: flex; justify-content: center; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; max-width: 800px; width: 100%; }
+    .footer-links { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { color: #a1a1aa; text-decoration: none; font-size: 14px; transition: color 0.3s ease; }
+    .footer-links a:hover { color: #ffffff; }
+    .footer-copy { color: #52525b; font-size: 13px; margin-top: 10px; }
+    @media (max-width: 1024px) {
+      .navbar { padding: 20px 24px; }
+      .manifesto-section { grid-template-columns: 1fr; gap: 40px; }
+      .network-grid { grid-template-columns: 1fr; }
+      .hub-container { padding: 80px 24px; }
+      .hero-content { padding: 0 24px 40px 24px; }
+      .sandbox-section, .peer-section { padding: 28px; }
+      .sandbox-grid { grid-template-columns: 1fr; }
     }
-  ]
+    @media (max-width: 640px) {
+      .navbar { padding: 16px 20px; flex-wrap: wrap; gap: 16px; }
+      .nav-links { gap: 16px; }
+      .hero-section { min-height: 560px; height: auto; }
+      .hero-content { padding: 80px 24px; }
+      .telemetry-hud { gap: 12px; padding: 12px; font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1794643418/Neon_Cyberpunk_A_Emblem-removebg-preview_whjq3c.png" alt="ARQITEQUE" class="brand-logo">
+      <span>ARQITEQUE</span>
+    </a>
+    <div class="nav-links">
+      <a href="#network">Network</a>
+      <a href="#engine">Engine</a>
+      <a href="#peer">Call It</a>
+      <a href="#connect">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero-section">
+    <canvas id="particle-wave" aria-hidden="true"></canvas>
+    <main class="hero-content">
+      <div class="hero-badge">Open Agentic Web · MVP 0.2</div>
+      <h1 class="headline">
+        <span>Necessity</span>
+        <span class="accent-text">Engine</span>
+      </h1>
+      <p class="subhead">Deterministic HTML purge. Browser-native. Callable by any agent on the open agentic web. Zero bloat. Measurable reduction.</p>
+      <div class="cta-group">
+        <a href="#engine" class="cta-btn">
+          Test Engine
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </a>
+        <a href="/agent-manifest.json" target="_blank" rel="noopener" class="cta-btn secondary" style="border-color: var(--cyan); color: var(--cyan);">
+          Agent Manifest
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <div class="hub-container">
+
+    <!-- Multi-agent Network -->
+    <section id="network" class="network-section">
+      <div class="section-tag">Agent Network</div>
+      <h2 class="section-title">Three agents. One purpose.</h2>
+      <p style="color: var(--muted); max-width: 640px; margin-bottom: 8px; line-height: 1.6;">
+        A focused multi-agent system designed to be discovered and called by other sites on the open agentic web.
+      </p>
+      <div class="network-grid">
+        <div class="agent-card">
+          <div class="agent-role">front_man</div>
+          <h3>necessity_coordinator</h3>
+          <p>Public entry point. Understands intent, selects cleaning mode, delegates to specialists, and returns structured results.</p>
+        </div>
+        <div class="agent-card">
+          <div class="agent-role">specialist</div>
+          <h3>purge_specialist</h3>
+          <p>Runs the deterministic transform. Supports aggressive, safe, preserve-classes, and security-first modes.</p>
+        </div>
+        <div class="agent-card">
+          <div class="agent-role">reporter</div>
+          <h3>telemetry_reporter</h3>
+          <p>Turns raw metrics into a concise, factual summary of what was removed and the measured impact.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Engine -->
+    <section id="engine" class="sandbox-section">
+      <div class="sandbox-header">
+        <div>
+          <div class="section-tag">Live Engine</div>
+          <h2 class="section-title" style="margin-bottom: 8px;">HTML Transformation</h2>
+          <p style="color: var(--muted); font-size: 15px;">Runs entirely in your browser. No server. No key required for the transform.</p>
+        </div>
+        <div class="mode-selector" id="mode-selector">
+          <button class="mode-btn active" data-mode="safe">safe</button>
+          <button class="mode-btn" data-mode="aggressive">aggressive</button>
+          <button class="mode-btn" data-mode="preserve-classes">preserve-classes</button>
+          <button class="mode-btn" data-mode="security-first">security-first</button>
+        </div>
+      </div>
+
+      <div class="telemetry-hud" style="margin-bottom: 24px;">
+        <div class="hud-metric">Reduction: <span id="metric-reduction">—</span></div>
+        <div class="hud-metric">Latency: <span id="metric-latency">—</span></div>
+        <div class="hud-metric">Mode: <span id="metric-mode">safe</span></div>
+        <div class="hud-metric">Nodes: <span id="metric-nodes">—</span></div>
+      </div>
+
+      <div class="sandbox-grid">
+        <div class="editor-pane">
+          <div class="pane-toolbar">
+            <span>input.html</span>
+            <button type="button" onclick="loadSampleBloat()">Load Sample</button>
+          </div>
+          <textarea id="source-code" class="code-input" spellcheck="false" oninput="runEngine()" aria-label="HTML input"><div class="container mx-auto p-8 bg-gray-900 shadow-2xl rounded-xl">
+  <h1 class="text-4xl font-bold text-indigo-400 mb-4" style="color:red;" onclick="alert('xss')">Bloated Template</h1>
+  <p class="text-gray-400 mb-6" align="center">Unnecessary utility classes, inline styles, and event handlers.</p>
+  <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg">Action</button>
+  <script>console.log("should be removed")</script>
+</div></textarea>
+        </div>
+        <div class="preview-pane">
+          <div class="pane-toolbar">
+            <span>purged.preview</span>
+            <button type="button" onclick="exportCode()" style="background:#059669;">Export</button>
+          </div>
+          <iframe id="live-preview" class="preview-container" sandbox="" referrerpolicy="no-referrer" title="Purged HTML preview"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- How other agents call this -->
+    <section id="peer" class="peer-section">
+      <div class="section-tag">Interoperability</div>
+      <h2 class="section-title">How other agents call this network</h2>
+      <p style="color: var(--muted); max-width: 680px; line-height: 1.6; margin-bottom: 8px;">
+        Any compatible agent on the open agentic web can load this network and invoke the Necessity Engine. No API key is required for the transform itself — it runs in the caller’s browser.
+      </p>
+
+      <div class="peer-code">
+<span>// Network URL</span><br>
+https://arqiteque.vercel.app/arqiteque-necessity-engine<br><br>
+<span>// Manifest</span><br>
+https://arqiteque.vercel.app/agent-manifest.json<br><br>
+<span>// Example invocation (conceptual)</span><br>
+{<br>
+&nbsp;&nbsp;"html": "&lt;div class='bloated'&gt;...&lt;/div&gt;",<br>
+&nbsp;&nbsp;"mode": "safe"&nbsp;&nbsp;<span>// aggressive | safe | preserve-classes | security-first</span><br>
 }
+      </div>
+      <p style="color: var(--muted); font-size: 14px; margin-top: 20px; line-height: 1.5;">
+        Front agent: <code style="color:#a5b4fc;">necessity_coordinator</code> · Peer policy: open · Runtime: self-contained, browser-native
+      </p>
+    </section>
+
+    <!-- Contact -->
+    <section id="connect" class="connect-dock">
+      <div class="connect-info">
+        <div class="section-tag" style="margin-bottom: 8px;">Direct Access</div>
+        <h3>Build with us.</h3>
+        <p>High-impact engineering, agentic systems, and zero-bloat architecture.</p>
+        <div class="raw-email">arqiteque.build@gmail.com</div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/agent-manifest.json" target="_blank">Manifest</a>
+      </div>
+      <p class="footer-copy">© 2026 ARQITEQUE · Open Agentic Web</p>
+    </div>
+  </footer>
+
+  <!-- Particle system (kept from original) -->
+  <script>
+    const canvas = document.getElementById('particle-wave');
+    const ctx = canvas.getContext('2d');
+    let width, height, time = 0, animationFrame;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      width = canvas.width = Math.round(rect.width);
+      height = canvas.height = Math.round(rect.height);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function smokeCurl(u, v, t) {
+      return Math.sin(u * 3.8 + t * 0.9 + v * 2.1) + Math.cos(u * 6.4 - t * 0.6 + v * 3.7) * 0.5 + Math.sin(u * 10.2 + v * 5.4 + t * 0.4) * 0.25;
+    }
+
+    function drawSmokeHaze(t) {
+      const puffs = [
+        { x: 0.56, y: 0.68, r: 0.24, c: 'rgba(109, 40, 217, 0.13)', dx: 0.04, dy: -0.03 },
+        { x: 0.78, y: 0.44, r: 0.28, c: 'rgba(59, 130, 246, 0.11)', dx: -0.03, dy: 0.04 },
+        { x: 0.86, y: 0.76, r: 0.22, c: 'rgba(139, 92, 246, 0.10)', dx: -0.04, dy: -0.02 }
+      ];
+      puffs.forEach((p, i) => {
+        const cx = width * (p.x + Math.sin(t * 0.7 + i * 2) * p.dx);
+        const cy = height * (p.y + Math.cos(t * 0.6 + i * 1.5) * p.dy);
+        const radius = Math.max(width, height) * p.r;
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grad.addColorStop(0, p.c);
+        grad.addColorStop(1, 'rgba(6, 7, 20, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawSmokeVeil({ cols, rows, startX, startY, endX, endY, twistFreq, twistPhase, spreadScale, amp, opacityScale }) {
+      for (let r = 0; r < rows; r++) {
+        const vNorm = r / (rows - 1);
+        const v = vNorm - 0.5;
+        for (let c = 0; c < cols; c++) {
+          const u = c / (cols - 1);
+          const spineX = width * (startX + (endX - startX) * u);
+          const spineY = height * (startY + (endY - startY) * u) + Math.sin(u * Math.PI * 1.5 - 0.5) * (height * amp);
+          const curlX = smokeCurl(u, v * 1.6, time) * 46;
+          const curlY = smokeCurl(u + 1.3, v * 1.8, time * 0.85) * 54;
+          const twistAngle = u * twistFreq + twistPhase + time * 0.55 + curlX * 0.008;
+          const dispersion = 1 + Math.abs(smokeCurl(u * 0.8, v, time * 0.5)) * 0.45;
+          const ribbonWidth = Math.cos(twistAngle) * spreadScale * dispersion;
+          const x = spineX - v * ribbonWidth * 0.52 + curlX;
+          const y = spineY + v * ribbonWidth + curlY;
+          const endFade = Math.pow(Math.sin(u * Math.PI), 1.35);
+          const edgeFade = Math.pow(Math.max(0, 1 - Math.abs(v * 2)), 1.85);
+          const pinchFactor = 1 - Math.min(1, Math.abs(Math.cos(twistAngle)));
+          const vaporShimmer = 0.85 + 0.15 * Math.sin(u * 12 + v * 9 + time * 1.5);
+          const alpha = Math.max(0, endFade * edgeFade * (0.28 + pinchFactor * 0.62) * vaporShimmer * opacityScale);
+          if (alpha <= 0.012) continue;
+          const violetMix = Math.max(0, Math.min(1, (1 - u) * 0.4 + pinchFactor * 0.5 + curlY * 0.004));
+          const coreGlow = pinchFactor * 48;
+          const red = Math.min(255, Math.round(42 * (1 - violetMix) + 150 * violetMix + coreGlow));
+          const green = Math.min(255, Math.round(104 * (1 - violetMix) + 58 * violetMix + coreGlow * 0.65));
+          const blue = Math.min(255, Math.round(238 * (1 - violetMix) + 248 * violetMix + coreGlow * 0.4));
+          ctx.beginPath();
+          ctx.arc(x, y, Math.max(0.45, 0.65 + edgeFade * 0.65 + pinchFactor * 0.35), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'lighter';
+      drawSmokeHaze(time);
+      drawSmokeVeil({ cols: 190, rows: 46, startX: 0.20, startY: 1.06, endX: 1.08, endY: 0.12, twistFreq: 4.1, twistPhase: 0.4, spreadScale: Math.min(width, height) * 0.44, amp: 0.15, opacityScale: 0.78 });
+      drawSmokeVeil({ cols: 135, rows: 28, startX: 0.34, startY: 1.14, endX: 1.12, endY: 0.50, twistFreq: 3.3, twistPhase: 2.0, spreadScale: Math.min(width, height) * 0.38, amp: -0.12, opacityScale: 0.42 });
+      ctx.globalCompositeOperation = 'source-over';
+      time += 0.0025;
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    if (!prefersReducedMotion) animate();
+    else drawSmokeHaze(0);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(animationFrame);
+      else if (!prefersReducedMotion) animate();
+    });
+  </script>
+
+  <script src="/necessity-agent.js"></script>
+
+  <script>
+    let currentMode = 'safe';
+
+    // Mode selector
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.dataset.mode;
+        document.getElementById('metric-mode').textContent = currentMode;
+        runEngine();
+      });
+    });
+
+    function loadSampleBloat() {
+      document.getElementById('source-code').value = `<div class="w-full bg-slate-950 flex items-center justify-center p-4" style="background:red;" onclick="alert(1)">
+  <div class="max-w-xl w-full bg-slate-900 border border-indigo-500/30 rounded-2xl p-6 shadow-2xl">
+    <h2 class="text-xl font-bold text-white tracking-tight mb-2" align="center">Zero-Bloat System Online</h2>
+    <p class="text-slate-400 text-xs leading-relaxed mb-4">Framework clutter + event handlers + scripts.</p>
+    <button class="w-full py-2.5 bg-indigo-600 text-white font-medium rounded-xl">Initialize</button>
+    <script>console.log("remove me")</script>
+  </div>
+</div>`;
+      runEngine();
+    }
+
+    function runEngine() {
+      const rawHtml = document.getElementById('source-code').value;
+      const iframe = document.getElementById('live-preview');
+
+      try {
+        if (!window.NecessityAuditor) throw new Error('Engine not loaded');
+
+        const result = window.NecessityAuditor.invoke({ html: rawHtml, mode: currentMode });
+
+        document.getElementById('metric-reduction').textContent = result.reduction_percent + '%';
+        document.getElementById('metric-latency').textContent = result.latency_ms + 'ms';
+        document.getElementById('metric-mode').textContent = result.mode || currentMode;
+        document.getElementById('metric-nodes').textContent = (result.raw_nodes || 0) + ' → ' + (result.purged_nodes || 0);
+
+        iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';"><style>body{font-family:sans-serif;padding:24px;background:#fff;color:#000;}</style></head><body>${result.purged_html || ''}</body></html>`;
+      } catch (err) {
+        console.error(err);
+        iframe.srcdoc = `<body style="font-family:sans-serif;padding:24px;color:#b91c1c"><h3>Processing failed</h3><p>${err.message}</p></body>`;
+        document.getElementById('metric-reduction').textContent = '—';
+        document.getElementById('metric-latency').textContent = '—';
+        document.getElementById('metric-nodes').textContent = '—';
+      }
+    }
+
+    function exportCode() {
+      const rawHtml = document.getElementById('source-code').value;
+      try {
+        const result = window.NecessityAuditor.invoke({ html: rawHtml, mode: currentMode });
+        const blob = new Blob([result.purged_html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'arqiteque-purged.html';
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        alert(e.message || 'Export failed');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', runEngine);
+  </script>
+</body>
+</html>
