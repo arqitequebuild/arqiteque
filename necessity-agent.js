@@ -26,7 +26,6 @@ const NecessityAuditor = (function () {
     const doc = parser.parseFromString(rawHtml, 'text/html');
     const rawNodes = doc.body.querySelectorAll('*').length;
 
-    // Counters
     let removedScripts = 0;
     let removedEventHandlers = 0;
     let removedJavascriptHrefs = 0;
@@ -37,24 +36,19 @@ const NecessityAuditor = (function () {
     let removedEmptyElements = 0;
     let removedComments = 0;
 
-    // --------------------------------------------------
-    // 1. SECURITY LAYER (always applied, strongest in security-first)
-    // --------------------------------------------------
+    // 1. SECURITY LAYER
     doc.body.querySelectorAll('script, iframe, object, embed, form').forEach(el => {
       el.remove();
       removedScripts++;
     });
 
     doc.body.querySelectorAll('*').forEach(el => {
-      // Remove all on* event handlers
       Array.from(el.attributes).forEach(attr => {
         if (attr.name.toLowerCase().startsWith('on')) {
           el.removeAttribute(attr.name);
           removedEventHandlers++;
         }
       });
-
-      // Neutralize javascript: URLs
       ['href', 'src', 'action', 'formaction', 'xlink:href'].forEach(attrName => {
         if (el.hasAttribute(attrName)) {
           const val = el.getAttribute(attrName) || '';
@@ -66,51 +60,34 @@ const NecessityAuditor = (function () {
       });
     });
 
-    // --------------------------------------------------
     // 2. DEPRECATED TAGS
-    // --------------------------------------------------
     doc.body.querySelectorAll('font').forEach(fontEl => {
       const span = doc.createElement('span');
       span.innerHTML = fontEl.innerHTML;
-      // Copy non-style attributes if we want, but keep it minimal
       fontEl.replaceWith(span);
       deprecatedTags++;
     });
 
-    // --------------------------------------------------
-    // 3. STYLE & ATTRIBUTE CLEANUP (mode-dependent)
-    // --------------------------------------------------
+    // 3. STYLE & ATTRIBUTE CLEANUP
     doc.body.querySelectorAll('*').forEach(el => {
-      // Inline styles
       if (el.hasAttribute('style')) {
         if (selectedMode === 'aggressive' || selectedMode === 'safe' || selectedMode === 'security-first') {
           el.removeAttribute('style');
           strippedStyles++;
         }
-        // preserve-classes keeps style attributes
       }
-
-      // Legacy presentational attributes
       const legacyAttrs = ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'valign', 'width', 'height', 'color', 'face', 'size'];
       legacyAttrs.forEach(attr => {
         if (el.hasAttribute(attr)) {
-          // In preserve-classes we still remove most legacy attrs except width/height if useful,
-          // but for consistency we strip them in all modes except pure preservation of classes.
           if (selectedMode !== 'preserve-classes' || !['width', 'height'].includes(attr)) {
             el.removeAttribute(attr);
             strippedLegacyAttrs++;
           }
         }
       });
-
-      // In aggressive mode we also strip class if the element has no other meaningful attributes
-      // (kept conservative for now)
     });
 
-    // --------------------------------------------------
     // 4. STRUCTURAL CLEANUP
-    // --------------------------------------------------
-    // Remove HTML comments
     const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_COMMENT, null, false);
     const comments = [];
     while (walker.nextNode()) comments.push(walker.currentNode);
@@ -119,7 +96,6 @@ const NecessityAuditor = (function () {
       removedComments++;
     });
 
-    // Collapse empty / useless wrapper divs (and spans in aggressive)
     let collapsed = true;
     while (collapsed) {
       collapsed = false;
@@ -128,7 +104,6 @@ const NecessityAuditor = (function () {
         : doc.body.querySelectorAll('div');
 
       candidates.forEach(el => {
-        // Only unwrap pure wrappers
         if (
           el.attributes.length === 0 &&
           el.children.length === 1 &&
@@ -141,7 +116,6 @@ const NecessityAuditor = (function () {
       });
     }
 
-    // Remove completely empty elements (aggressive + security-first)
     if (selectedMode === 'aggressive' || selectedMode === 'security-first') {
       doc.body.querySelectorAll('div, span, p, section, article').forEach(el => {
         if (!el.textContent.trim() && el.children.length === 0 && el.attributes.length === 0) {
@@ -151,15 +125,12 @@ const NecessityAuditor = (function () {
       });
     }
 
-    // --------------------------------------------------
     // 5. SERIALIZE
-    // --------------------------------------------------
     let purgedHtml = doc.body.innerHTML
       .replace(/>\s+</g, '><')
       .replace(/\n\s*\n/g, '\n')
       .trim();
 
-    // Final safety pass for aggressive mode – remove leftover empty attributes noise
     if (selectedMode === 'aggressive') {
       purgedHtml = purgedHtml
         .replace(/\s+class=""/g, '')
@@ -196,10 +167,6 @@ const NecessityAuditor = (function () {
   }
 
   return {
-    /**
-     * Main entry point expected by the agent runtime.
-     * Accepts either a string or an object { html, mode }
-     */
     invoke: function (input) {
       if (typeof input === 'string') {
         return purgeHtml(input, 'safe');
@@ -208,7 +175,6 @@ const NecessityAuditor = (function () {
       const mode = input && (input.mode || input.Mode || 'safe');
       return purgeHtml(html, mode);
     },
-
     purgeHtml: purgeHtml,
     modes: VALID_MODES
   };
