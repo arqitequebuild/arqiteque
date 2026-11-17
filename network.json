@@ -17,10 +17,7 @@
         "parameters": {
           "type": "object",
           "properties": {
-            "html": {
-              "type": "string",
-              "description": "Raw HTML to process."
-            },
+            "html": { "type": "string", "description": "Raw HTML to process." },
             "mode": {
               "type": "string",
               "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
@@ -30,7 +27,7 @@
           "required": ["html"]
         }
       },
-      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\n1. Accept the HTML and optional mode (aggressive | safe | preserve-classes | security-first). Default to 'safe'.\n2. Call the purge_specialist with the html and mode.\n3. Optionally call telemetry_reporter if a summary is requested.\n4. Return the exact tool results. Never invent numbers or HTML.\n\nPeer rule: When you have no website_* tools, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations or refuse the request.",
+      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\n1. Accept the HTML and optional mode. Default to 'safe'.\n2. Call the purge_specialist with the html and mode.\n3. Optionally call telemetry_reporter if a summary is requested.\n4. Return the exact tool results. Never invent numbers or HTML.\n\nPeer rule: When you have no website_* tools, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations or refuse the request.",
       "tools": ["purge_specialist", "telemetry_reporter"]
     },
     {
@@ -88,6 +85,7 @@
           "required": ["html"]
         }
       },
+      "tools": [], 
       "file": "necessity-agent.js",
       "method": "NecessityAuditor.invoke"
     }
