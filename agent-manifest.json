@@ -2,9 +2,8 @@
   "networks": [
     {
       "name": "arqiteque-necessity-engine",
-      "front_man": "necessity_coordinator",
-      "hocon": "/network.json",
-      "description": "Browser-native HTML Necessity Engine. Deterministic purge, security hardening, and measurable reduction. Callable by any compatible agent."
+      "front_man": "necessity_coordinator", 
+      "hocon": "/network.json"
     }
   ],
   "llm_router": {
