@@ -5,22 +5,19 @@
     "version": "0.2.1"
   },
   "max_steps": 16,
-  "front_man": "necessity_coordinator",
+  "front_man": "purge_html",
   "llm_config": {
     "model_name": "alibaba/qwen-3.5-35b-a3b"
   },
   "agents": [
     {
-      "name": "necessity_coordinator",
+      "name": "purge_html",
       "function": {
-        "description": "Public entry-point coordinator for the ARQITEQUE Necessity Engine. Receives HTML cleaning requests, selects mode, delegates to specialists, and returns purged HTML with telemetry.",
+        "description": "Public entry-point coordinator. Receives HTML cleaning requests, selects mode, delegates to specialists, and returns purged HTML with telemetry.",
         "parameters": {
           "type": "object",
           "properties": {
-            "html": {
-              "type": "string",
-              "description": "Raw HTML to process."
-            },
+            "html": { "type": "string", "description": "Raw HTML to process." },
             "mode": {
               "type": "string",
               "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
@@ -30,42 +27,7 @@
           "required": ["html"]
         }
       },
-      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\n1. Accept the HTML and optional mode (aggressive | safe | preserve-classes | security-first). Default to 'safe'.\n2. Call the purge_specialist with the html and mode.\n3. Optionally call telemetry_reporter if a summary is requested.\n4. Return the exact tool results. Never invent numbers or HTML.\n\nPeer rule: When you have no website_* tools, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations or refuse the request.",
-      "tools": ["purge_specialist", "telemetry_reporter"]
-    },
-    {
-      "name": "purge_specialist",
-      "function": {
-        "description": "Deterministic HTML transformer. Strips scripts, event handlers, inline styles, deprecated tags and wrapper noise according to the selected mode. Returns purged HTML and detailed telemetry.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": { "type": "string", "description": "Raw HTML payload." },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"]
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "instructions": "You are the deterministic core. Always call the purge_html tool with the provided html and mode. Return the exact tool output without modification.",
-      "tools": ["purge_html"]
-    },
-    {
-      "name": "telemetry_reporter",
-      "function": {
-        "description": "Turns raw purge telemetry into a short factual summary of reduction and what was removed.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "telemetry": { "type": "object", "description": "Telemetry object from the purge tool." },
-            "mode": { "type": "string" }
-          },
-          "required": ["telemetry"]
-        }
-      },
-      "instructions": "Produce a concise 2-4 sentence factual summary from the telemetry object. Do not invent numbers.",
+      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\n1. Accept the HTML and optional mode. Default to 'safe'.\n2. Process the HTML using your deterministic core.\n3. Return the exact result. Never invent numbers or HTML.\n\nPeer rule: When you have no website_* tools, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations or refuse the request.",
       "tools": []
     }
   ],
@@ -88,6 +50,7 @@
           "required": ["html"]
         }
       },
+      "tools": [],
       "file": "necessity-agent.js",
       "method": "NecessityAuditor.invoke"
     }
