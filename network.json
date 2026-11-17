@@ -1,8 +1,9 @@
 {
   "metadata": {
     "name": "arqiteque-necessity-engine",
-    "description": "Browser-native HTML Necessity Engine. Deterministic purge, security hardening, and measurable reduction of bloated HTML. Callable by any compatible agent on the open agentic web.",
-    "version": "0.2.1"
+    "description": "Browser-native HTML Necessity Engine. Deterministic purge, security hardening, and measurable reduction of bloated HTML. Callable by any compatible agent on the open agentic web. Runs entirely client-side.",
+    "version": "0.2.0",
+    "publisher": "ARQITEQUE"
   },
   "max_steps": 16,
   "front_man": "necessity_coordinator",
@@ -13,7 +14,83 @@
     {
       "name": "necessity_coordinator",
       "function": {
-        "description": "Public entry-point coordinator for the ARQITEQUE Necessity Engine. Receives HTML cleaning requests, selects mode, delegates to specialists, and returns purged HTML with telemetry.",
+        "description": "Entry-point coordinator for the ARQITEQUE Necessity Engine. Receives HTML cleaning requests, selects the appropriate mode, delegates to specialists, and returns clean results with full telemetry.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "html": {
+              "type": "string",
+              "description": "Raw HTML to process."
+            },
+            "mode": {
+              "type": "string",
+              "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
+              "description": "Cleaning intensity. Defaults to 'safe' if omitted."
+            },
+            "goal": {
+              "type": "string",
+              "description": "Optional short statement of what the caller wants (e.g. 'remove bloat for email', 'security sanitize')."
+            }
+          },
+          "required": ["html"]
+        }
+      },
+      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\nYour job:\n1. Understand the request and the desired mode (aggressive | safe | preserve-classes | security-first). Default to 'safe' if the caller does not specify.\n2. Call the purge_specialist tool with the html and chosen mode.\n3. Optionally call the telemetry_reporter if the caller asks for analysis or a summary.\n4. Return the purged HTML together with the full telemetry object. Never invent results — always use the tool output.\n\nPeer rule: When you have no website_* tools available, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations.\n\nStay precise, minimal, and deterministic. Prefer short, structured answers over long explanations unless the caller explicitly asks for commentary.",
+      "tools": ["purge_specialist", "telemetry_reporter"]
+    },
+    {
+      "name": "purge_specialist",
+      "function": {
+        "description": "Deterministic HTML transformer. Strips unnecessary markup, inline styles, deprecated tags, and dangerous attributes according to the selected mode. Returns purged HTML plus exact byte/node reduction metrics.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "html": {
+              "type": "string",
+              "description": "Raw HTML payload."
+            },
+            "mode": {
+              "type": "string",
+              "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
+              "description": "Cleaning mode."
+            }
+          },
+          "required": ["html"]
+        }
+      },
+      "instructions": "You are the deterministic core of the Necessity Engine. Always call the purge_html tool with the provided html and mode. Return the exact tool result without modification or invention. Do not add commentary unless the coordinator asked for it.",
+      "tools": ["purge_html"]
+    },
+    {
+      "name": "telemetry_reporter",
+      "function": {
+        "description": "Turns raw purge telemetry into a short, useful summary of what was removed and the measured impact.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "telemetry": {
+              "type": "object",
+              "description": "The telemetry object returned by the purge tool."
+            },
+            "mode": {
+              "type": "string",
+              "description": "The mode that was used."
+            }
+          },
+          "required": ["telemetry"]
+        }
+      },
+      "instructions": "You receive the telemetry object from a successful purge. Produce a concise, factual summary (2–5 sentences max) covering: reduction percentage, bytes saved, nodes removed, and the most important categories of cleanup performed. Do not invent numbers. Stay technical and brief.",
+      "tools": []
+    }
+  ],
+  "tools": [
+    {
+      "name": "purge_html",
+      "description": "Core coded tool that runs the deterministic Necessity Engine transform in the browser.",
+      "instructions": "Call this tool with an HTML string and optional mode. It returns purged HTML and full telemetry. Runs entirely client-side.",
+      "function": {
+        "description": "Deterministic HTML transformer with mode support.",
         "parameters": {
           "type": "object",
           "properties": {
@@ -25,64 +102,6 @@
               "type": "string",
               "enum": ["aggressive", "safe", "preserve-classes", "security-first"],
               "description": "Cleaning intensity. Defaults to safe."
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine.\n\n1. Accept the HTML and optional mode (aggressive | safe | preserve-classes | security-first). Default to 'safe'.\n2. Call the purge_specialist with the html and mode.\n3. Optionally call telemetry_reporter if a summary is requested.\n4. Return the exact tool results. Never invent numbers or HTML.\n\nPeer rule: When you have no website_* tools, another site's assistant is asking you to clean HTML. Process the request directly using the tools you have. Do not claim missing integrations or refuse the request.",
-      "tools": ["purge_specialist", "telemetry_reporter"]
-    },
-    {
-      "name": "purge_specialist",
-      "function": {
-        "description": "Deterministic HTML transformer. Strips scripts, event handlers, inline styles, deprecated tags and wrapper noise according to the selected mode. Returns purged HTML and detailed telemetry.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": { "type": "string", "description": "Raw HTML payload." },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"]
-            }
-          },
-          "required": ["html"]
-        }
-      },
-      "instructions": "You are the deterministic core. Always call the purge_html tool with the provided html and mode. Return the exact tool output without modification.",
-      "tools": ["purge_html"]
-    },
-    {
-      "name": "telemetry_reporter",
-      "function": {
-        "description": "Turns raw purge telemetry into a short factual summary of reduction and what was removed.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "telemetry": { "type": "object", "description": "Telemetry object from the purge tool." },
-            "mode": { "type": "string" }
-          },
-          "required": ["telemetry"]
-        }
-      },
-      "instructions": "Produce a concise 2-4 sentence factual summary from the telemetry object. Do not invent numbers.",
-      "tools": []
-    }
-  ],
-  "tools": [
-    {
-      "name": "purge_html",
-      "description": "Core coded tool that runs the deterministic Necessity Engine transform in the browser.",
-      "instructions": "Call with html and optional mode. Returns purged HTML + full telemetry. Runs entirely client-side.",
-      "function": {
-        "description": "Deterministic HTML transformer with mode support.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "html": { "type": "string" },
-            "mode": {
-              "type": "string",
-              "enum": ["aggressive", "safe", "preserve-classes", "security-first"]
             }
           },
           "required": ["html"]
