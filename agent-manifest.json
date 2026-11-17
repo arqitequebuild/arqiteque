@@ -12,7 +12,8 @@
     "mock": false
   },
   "peer_policy": {
-    "mode": "open"
+    "mode": "open",
+    "instructions": "When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes."
   },
   "deployment": {
     "mode": "static",
