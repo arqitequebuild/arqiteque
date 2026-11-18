@@ -15,7 +15,6 @@
   "agents": [
     {
       "name": "purge_html",
-      "description": "Public entry-point coordinator for ARQITEQUE. Accepts HTML optimization requests and returns deterministic HTML transformations.",
       "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine. When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.",
       "function": {
         "description": "Accepts HTML optimization requests and returns deterministic HTML transformations.",
@@ -38,7 +37,6 @@
     },
     {
       "name": "purge_specialist",
-      "description": "Specialist agent executing underlying data cleaning and transformation processing.",
       "instructions": "Execute code-level transformations securely within client constraints.",
       "function": {
         "description": "Executes underlying data cleaning and transformation processing.",
