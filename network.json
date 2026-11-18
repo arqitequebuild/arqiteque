@@ -1,4 +1,18 @@
-"agents": [
+{
+  "metadata": {
+    "name": "arqiteque-necessity-engine",
+    "description": "Browser-native HTML Necessity Engine for the open agentic web.",
+    "version": "0.2.5"
+  },
+  "max_steps": 12,
+  "front_man": "purge_html",
+  "llm_config": {
+    "model_name": "alibaba/qwen-3.5-35b-a3b"
+  },
+  "peer_policy": {
+    "mode": "open"
+  },
+  "agents": [
     {
       "name": "purge_html",
       "function": {
@@ -27,6 +41,33 @@
         }
       },
       "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine. When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.",
+      "tools": [
+        "purge_html"
+      ]
+    },
+    {
+      "name": "purge_specialist",
+      "function": {
+        "description": "Specialist agent executing underlying data cleaning and transformation processing.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "html": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "instructions": "Execute code-level transformations securely within client constraints.",
       "tools": []
     }
+  ],
+  "tools": [
+    {
+      "name": "purge_html",
+      "description": "Core coded tool that executes the deterministic ARQITEQUE Necessity Engine HTML transformation.",
+      "file": "necessity-agent.js",
+      "method": "NecessityAuditor.invoke"
+    }
   ]
+}
