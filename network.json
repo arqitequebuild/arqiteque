@@ -15,40 +15,33 @@
   "agents": [
     {
       "name": "purge_html",
+      "description": "Public entry-point coordinator for ARQITEQUE. Accepts HTML optimization requests and returns deterministic HTML transformations.",
+      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine. When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.",
       "function": {
-        "description": "Public entry-point coordinator for ARQITEQUE. Accepts HTML optimization requests and returns deterministic HTML transformations with processing telemetry.",
+        "description": "Accepts HTML optimization requests and returns deterministic HTML transformations.",
         "parameters": {
           "type": "object",
           "properties": {
-            "html": {
+            "request": {
               "type": "string",
-              "description": "Raw HTML document to analyze and process."
-            },
-            "mode": {
-              "type": "string",
-              "enum": [
-                "aggressive",
-                "safe",
-                "preserve-classes",
-                "security-first"
-              ],
-              "description": "HTML transformation mode. Defaults to safe."
+              "description": "HTML document or optimization request."
             }
           },
           "required": [
-            "html"
+            "request"
           ]
         }
       },
-      "instructions": "You are the public front agent of the ARQITEQUE Necessity Engine. When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.",
       "tools": [
         "purge_html"
       ]
     },
     {
       "name": "purge_specialist",
+      "description": "Specialist agent executing underlying data cleaning and transformation processing.",
+      "instructions": "Execute code-level transformations securely within client constraints.",
       "function": {
-        "description": "Specialist agent executing underlying data cleaning and transformation processing.",
+        "description": "Executes underlying data cleaning and transformation processing.",
         "parameters": {
           "type": "object",
           "properties": {
@@ -58,7 +51,6 @@
           }
         }
       },
-      "instructions": "Execute code-level transformations securely within client constraints.",
       "tools": []
     }
   ],
